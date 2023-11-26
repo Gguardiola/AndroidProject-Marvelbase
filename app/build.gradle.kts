@@ -35,6 +35,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("io.github.zawn.retrofit2:retrofit:2.10.6")
     implementation("io.github.zawn.retrofit2:gson:2.10.4")
+    implementation("com.forceai.glide:glide:4.11.0.10")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
