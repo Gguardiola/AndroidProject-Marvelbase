@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- mainpageactivity strings -->
+
     <string name="app_name">Marvelbase</string>
+    <string name="ek_img_content">ExportKit Image</string>
+    <string name="______label_string">Creators</string>
+    <string name="______label_ek1_string">CHARACTERS</string>
+    <string name="______label_ek2_string">Comics</string>
+    <string name="______label_ek3_string">Favorites</string>
+    <string name="component_name_string">Welcome back! </string>
 </resources>

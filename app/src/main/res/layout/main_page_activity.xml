@@ -1,0 +1,259 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<!--
+    /*
+     *	This content is generated from the API File Info.
+     *	(Alt+Shift+Ctrl+I).
+     *
+     *	@desc
+     *	@file 		mainpageactivity
+     *	@date 		Monday 27th of November 2023 11:35:30 AM
+     *	@title 		MainPage
+     *	@author
+     *	@keywords
+     *	@generator 	Export Kit v1.3.figma
+     *
+     */
+    -->
+	<ScrollView
+		android:id="@+id/mainpageactivity"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<RelativeLayout
+			android:id="@+id/content_container"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp">
+
+
+			<RelativeLayout
+				android:id="@+id/page_mainpageactivity_ek1"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginStart="0dp"
+				android:layout_marginTop="0dp">
+
+
+				<RelativeLayout
+					android:id="@+id/_3__contained_a__text"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="200dp"
+					android:layout_marginTop="123dp">
+
+					<ImageButton
+						android:id="@+id/creators_btn"
+						android:layout_width="154dp"
+						android:layout_height="276dp"
+						android:layout_marginStart="0dp"
+						android:layout_marginTop="0dp"
+						android:background="@drawable/btn_creators_background"
+						android:contentDescription="CreatorsButton" />
+
+
+					<RelativeLayout
+						android:id="@+id/text"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="27.5dp"
+						android:layout_marginTop="96dp">
+
+						<TextView
+							android:id="@+id/______label"
+							android:layout_width="100dp"
+							android:layout_height="100dp"
+							android:layout_gravity="center_horizontal|center"
+							android:layout_marginLeft="3dp"
+							android:layout_marginTop="4dp"
+							android:fontFamily="@font/roboto_bold"
+							android:gravity="center"
+							android:text="Creators    ✍️"
+							android:textAllCaps="false"
+							android:textColor="@color/white"
+							android:textSize="24sp" />
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+
+				<RelativeLayout
+					android:id="@+id/_3__contained_a__text_ek2"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="21dp"
+					android:layout_marginTop="123dp">
+
+					<ImageButton
+						android:id="@+id/characters_btn"
+						android:layout_width="154dp"
+						android:layout_height="276dp"
+						android:layout_marginStart="0dp"
+						android:layout_marginTop="0dp"
+						android:background="@drawable/btn_characters_background"
+						android:contentDescription="charactersButton" />
+					<RelativeLayout
+						android:id="@+id/text_ek2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="15dp"
+						android:layout_marginTop="96dp">
+
+						<TextView
+							android:id="@+id/______label_ek1"
+							android:layout_width="121dp"
+							android:layout_height="100dp"
+							android:layout_gravity="center_horizontal|center"
+							android:layout_marginLeft="3dp"
+							android:layout_marginTop="4dp"
+							android:fontFamily="@font/roboto_bold"
+							android:gravity="center"
+							android:text="Characters         🤠"
+							android:textAllCaps="false"
+							android:textColor="@color/white"
+							android:textSize="24sp" />
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+
+				<RelativeLayout
+					android:id="@+id/_3__contained_a__text_ek4"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="21dp"
+					android:layout_marginTop="438dp">
+
+					<ImageButton
+						android:id="@+id/comics_btn"
+						android:layout_width="154dp"
+						android:layout_height="276dp"
+						android:layout_marginStart="0dp"
+						android:layout_marginTop="0dp"
+						android:background="@drawable/btn_comics_background"
+						android:contentDescription="comicsButton" />
+
+
+					<RelativeLayout
+						android:id="@+id/text_ek4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="26dp"
+						android:layout_marginTop="96dp">
+
+						<TextView
+							android:id="@+id/______label_ek2"
+							android:layout_width="100dp"
+							android:layout_height="100dp"
+							android:layout_gravity="center_horizontal|center"
+							android:layout_marginLeft="3dp"
+							android:layout_marginTop="4dp"
+							android:fontFamily="@font/roboto_bold"
+							android:gravity="center"
+							android:text="Comics 📚"
+							android:textAllCaps="false"
+							android:textColor="@color/white"
+							android:textSize="24sp" />
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+
+				<RelativeLayout
+					android:id="@+id/_3__contained_a__text_ek6"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="200dp"
+					android:layout_marginTop="438dp">
+
+					<ImageButton
+						android:id="@+id/favorites_btn"
+						android:layout_width="154dp"
+						android:layout_height="276dp"
+						android:layout_marginStart="0dp"
+						android:layout_marginTop="0dp"
+						android:background="@drawable/btn_favorites_background"
+						android:contentDescription="favoritesButton" />
+
+
+					<RelativeLayout
+						android:id="@+id/text_ek6"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="26dp"
+						android:layout_marginTop="96dp">
+
+						<TextView
+							android:id="@+id/______label_ek3"
+							android:layout_width="100dp"
+							android:layout_height="100dp"
+							android:layout_gravity="center_horizontal|center"
+							android:layout_marginLeft="3dp"
+							android:layout_marginTop="4dp"
+							android:fontFamily="@font/roboto_bold"
+							android:gravity="center"
+							android:text="Favorites    📌"
+							android:textAllCaps="false"
+							android:textColor="@color/white"
+							android:textSize="24sp" />
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+
+				<RelativeLayout
+					android:id="@+id/header"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="0dp"
+					android:layout_marginTop="0dp">
+
+					<View
+						android:id="@+id/_bg__header_ek1"
+						android:layout_width="360dp"
+						android:layout_height="98dp"
+						android:layout_marginStart="0dp"
+						android:layout_marginTop="0dp" />
+
+					<View
+						android:id="@+id/__divider"
+						android:layout_width="317.81dp"
+						android:layout_height="0.49dp"
+						android:layout_marginStart="21.09dp"
+						android:layout_marginTop="97.51dp"
+						android:alpha="0.23999999463558"
+						android:background="@drawable/__divider_shape" />
+
+					<TextView
+						android:id="@+id/component_name"
+						android:layout_width="278.2dp"
+						android:layout_height="57.2dp"
+						android:layout_alignParentStart="true"
+						android:layout_alignParentTop="true"
+						android:layout_alignParentEnd="true"
+						android:layout_alignParentBottom="true"
+						android:layout_marginStart="21dp"
+						android:layout_marginLeft="21.09dp"
+						android:layout_marginTop="28dp"
+						android:layout_marginEnd="61dp"
+						android:layout_marginBottom="13dp"
+						android:fontFamily="@font/roboto_bold"
+						android:text="Welcome back! 🎉"
+						android:textColor="@color/component_name_color"
+						android:textSize="32sp"
+						android:textStyle="bold" />
+
+
+				</RelativeLayout>
+
+			</RelativeLayout>
+		</RelativeLayout>
+
+	</ScrollView>
+</HorizontalScrollView>
