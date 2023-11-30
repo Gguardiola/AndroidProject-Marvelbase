@@ -10,7 +10,6 @@ public class Comics {
     PricesCom prices;
     ThumbnailCom thumbnail;
     CreatorsCom creators;
-
     public Comics(int id, String title, String pageCount, TextObjectsCom textObjects, SeriesCom series, PricesCom prices, ThumbnailCom thumbnail, CreatorsCom creators) {
         this.id = id;
         this.title = title;
