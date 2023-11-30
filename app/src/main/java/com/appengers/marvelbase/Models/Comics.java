@@ -20,7 +20,6 @@ public class Comics {
         this.thumbnail = thumbnail;
         this.creators = creators;
     }
-
     public int getId() {
         return id;
     }
