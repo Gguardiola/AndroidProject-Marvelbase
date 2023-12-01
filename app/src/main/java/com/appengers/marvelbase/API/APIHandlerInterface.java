@@ -7,5 +7,5 @@ import com.appengers.marvelbase.R;
 public interface APIHandlerInterface {
     //APIHandlerInterface: definition of all the API calls
 
-    //TODO: Firebase handler too? ask Mr. Alejandro
+    //TODO: Firebase handler too? ask Mºr. Alejandro
 }
