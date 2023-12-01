@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Marvelbase"
         tools:targetApi="31">
         <activity
-            android:name=".CharacterActivity"
+            android:name=".ui.Characters.CharacterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,4 @@
-package com.appengers.marvelbase;
+package com.appengers.marvelbase.ui.Characters;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.appengers.marvelbase.Models.Characters;
+import com.appengers.marvelbase.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
