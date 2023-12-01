@@ -1,4 +1,4 @@
-package com.appengers.marvelbase;
+package com.appengers.marvelbase.ui.Characters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appengers.marvelbase.Models.Characters;
+import com.appengers.marvelbase.R;
 
 import java.util.ArrayList;
 import java.util.List;
