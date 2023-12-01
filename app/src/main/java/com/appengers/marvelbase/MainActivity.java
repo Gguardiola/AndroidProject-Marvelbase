@@ -11,6 +11,7 @@ import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.ui.Characters.CharacterActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,15 +25,15 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    APIController apiController = new APIController();
-
-
     private ImageButton btnCharacters, btnComics, btnFavorites, btnCreators;
     private ActivityResultLauncher<Intent> startCharacterAct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page_activity);
+
+        Resources res = getResources();
+        APIController apiController = new APIController(res);
 
         btnCreators = (ImageButton) findViewById(R.id.creators_btn);
         btnCharacters = (ImageButton) findViewById(R.id.characters_btn);

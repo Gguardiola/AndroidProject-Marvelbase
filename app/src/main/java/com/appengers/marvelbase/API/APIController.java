@@ -17,11 +17,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIController extends AppCompatActivity {
     //APIController: Methods to handle the API calls
-    Resources res = getResources();
-    private String PRIVATEKEY = res.getString(R.string.PRIVATEKEY);
-    private String PUBLICKEY = res.getString(R.string.PUBLICKEY);
-    private String HASKEY = res.getString(R.string.HASHKEY);
-    private String  ENDPOINT = res.getString(R.string.ENDPOINT);
+    Resources res;
+
+    private String PRIVATEKEY, PUBLICKEY, HASHKEY, ENDPOINT;
+
+    public APIController(Resources res) {
+        this.res = res;
+        this.ENDPOINT = this.res.getString(R.string.ENDPOINT);
+        this.PRIVATEKEY = this.res.getString(R.string.PRIVATEKEY);
+        this.PUBLICKEY = this.res.getString(R.string.PUBLICKEY);
+        this.HASHKEY =this.res.getString(R.string.HASHKEY);
+    }
+
+
 
 //    public ArrayList<Characters> getCharacters(){
 //
