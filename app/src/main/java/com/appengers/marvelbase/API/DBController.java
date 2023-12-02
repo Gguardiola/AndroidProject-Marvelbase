@@ -2,13 +2,18 @@ package com.appengers.marvelbase.API;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.appengers.marvelbase.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,67 +27,87 @@ import java.util.Map;
 
 public class DBController {
 
-    enum Category {
-        CHARACTER,
-        COMIC,
-        CREATOR,
+    public enum Category {
+        CHARACTERS,
+        COMICS,
+        CREATORS,
     }
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences prefs;
+    Context context;
+    String userId;
 
-    public void addFavorite(int userId, Category category, int itemId){
-
-
+    public DBController(Context context) {
+        this.context = context;
+        this.prefs = context.getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
     }
 
-    //    db.collection("UsersFavorites")
-    //            .get()
-    //            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-    //    @Override
-    //    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-    //        if (task.isSuccessful()) {
-    //            for (QueryDocumentSnapshot document : task.getResult()) {
-    //                Log.d("FIRESTORE - READ TEST", document.getId() + " => " + document.getData());
-    //            }
-    //        } else {
-    //            Log.w(TAG, "Error getting documents.", task.getException());
-    //        }
-    //    }
-    //});
-//
-    ////test post firestore
-    //Map<String, Object> bodyContent = new HashMap<>();
-    //List<Integer> characters = new ArrayList<Integer>();
-    //    characters.add(234234);
-    //    characters.add(345345435);
-//
-    //List<Integer> creators = new ArrayList<Integer>();
-    //    creators.add(34534543);
-    //    creators.add(345435);
-//
-    //List<Integer> comics = new ArrayList<Integer>();
-    //    comics.add(345435345);
-    //    comics.add(345435);
-//
-    //// Add arrays to the document content
-    //    bodyContent.put("characters", characters);
-    //    bodyContent.put("creators", creators);
-    //    bodyContent.put("comics", comics);
-//
-//
+    public void setUserId(){
+        this.userId = prefs.getString("USER_ID",String.valueOf(0));
+        Log.d("USER ID SETTED: ",userId);
+    }
+    public void init(String userId){
+        Map<String, Object> bodyContent = new HashMap<>();
 
-    //    db.collection("UsersFavorites")
-    //            .add(bodyContent)
-    //            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-    //    @Override
-    //    public void onSuccess(DocumentReference documentReference) {
-    //        Log.d("FIRESTORE - ADD TEST", "DocumentSnapshot added with ID: " + documentReference.getId());
-    //    }
-    //})
-    //        .addOnFailureListener(new OnFailureListener() {
-    //    @Override
-    //    public void onFailure(@NonNull Exception e) {
-    //        Log.w(TAG, "Error adding document", e);
-    //    }
-    //});
-//
+        bodyContent.put("characters",  new ArrayList<Integer>());
+        bodyContent.put("creators",  new ArrayList<Integer>());
+        bodyContent.put("comics",  new ArrayList<Integer>());
+
+        db.collection("UsersFavorites").document(userId)
+        .set(bodyContent)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("FIRESTORE - SET TEST", "CUSTOM added with ID: ");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding document", e);
+            }
+        });
+        this.userId = userId;
+    }
+
+    public void addFavorite(Category category, int itemId){
+        String currentCategory = category.name().toLowerCase();
+        DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ArrayList<Integer> focusItemArray = (ArrayList<Integer>) document.get(currentCategory);
+                        if (focusItemArray == null) {
+                            focusItemArray = new ArrayList<Integer>();
+                        }
+                        focusItemArray.add(itemId);
+                        docRef.update(currentCategory, focusItemArray);
+                        Log.d("DB - ADDED FAVORITE TO "+userId+" on "+currentCategory+":",String.valueOf(itemId));
+                    }
+                }
+            }
+        });
+    }
+
+    public void deleteFavorite(Category category, int itemId){
+        String currentCategory = category.name().toLowerCase();
+        DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ArrayList<Integer> focusItemArray = (ArrayList<Integer>) document.get(currentCategory);
+                        focusItemArray.remove(Integer.valueOf(itemId));
+                        docRef.update(currentCategory, focusItemArray);
+                        Log.d("DB - DELETED FAVORITE TO "+userId+" on "+currentCategory+":",String.valueOf(itemId));
+                    }
+                }
+            }
+        });
+    }
 }
