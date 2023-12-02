@@ -36,16 +36,18 @@ public class DBController {
     SharedPreferences prefs;
     Context context;
     String userId;
-
+    //Constructor that stores the context
     public DBController(Context context) {
         this.context = context;
         this.prefs = context.getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
     }
-
+    //Method that is called to set the userId from the phone storage (not first run)
     public void setUserId(){
         this.userId = prefs.getString("USER_ID",String.valueOf(0));
         Log.d("USER ID SETTED: ",userId);
     }
+
+    //Initialize the Document inside the collection of the new user (first run)
     public void init(String userId){
         Map<String, Object> bodyContent = new HashMap<>();
 
@@ -69,7 +71,7 @@ public class DBController {
         });
         this.userId = userId;
     }
-
+    //Adds a new Item inside the selected Category
     public void addFavorite(Category category, int itemId){
         String currentCategory = category.name().toLowerCase();
         DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
@@ -91,7 +93,7 @@ public class DBController {
             }
         });
     }
-
+    //Deletes an Item from the selected Category
     public void deleteFavorite(Category category, int itemId){
         String currentCategory = category.name().toLowerCase();
         DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
