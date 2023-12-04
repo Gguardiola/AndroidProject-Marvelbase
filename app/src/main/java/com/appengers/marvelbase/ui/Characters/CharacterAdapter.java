@@ -16,13 +16,13 @@ import com.appengers.marvelbase.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class charAdapter extends RecyclerView.Adapter<charAdapter.CharactersViewHolder>{
+public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharactersViewHolder>{
 
     private List<Characters> charactersList = new ArrayList<>();
     @NonNull
     @Override
     public CharactersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.char_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_template_character, parent, false);
         return new CharactersViewHolder(view);
     }
 

@@ -14,6 +14,7 @@ import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.API.DBController.Category;
 import com.appengers.marvelbase.ui.Characters.CharacterActivity;
+import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,15 +35,14 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnCharacters, btnComics, btnFavorites, btnCreators;
-    private ActivityResultLauncher<Intent> startCharacterAct;
+    private ActivityResultLauncher<Intent> startCharacterAct, startCreatorAct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page_activity);
 
-        Resources res = getResources();
-        APIController apiController = new APIController(res);
+        APIController api = new APIController(getResources());
         DBController db = new DBController(this);
 
         if (isFirstRun(this)) {
@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         btnCreators.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Creator test", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), CreatorsActivity.class);
+                startCreatorAct.launch(intent);
             }
         });
         btnCharacters.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,15 @@ public class MainActivity extends AppCompatActivity {
                 startCharacterAct.launch(intent);
             }
         });
+        // ACTIVITY INTENT STARTERS //
+        startCreatorAct = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+
+                    }
+                }
+        );
         startCharacterAct = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

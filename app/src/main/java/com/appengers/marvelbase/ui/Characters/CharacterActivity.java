@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.R;
 
 import retrofit2.Retrofit;
@@ -15,15 +17,18 @@ public class CharacterActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    private charAdapter charAdapter;
+    private CharacterAdapter charAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
 
+        Intent intent = getIntent();
+        APIController api = new APIController(getResources());
+
         recyclerView = findViewById(R.id.recyChar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        charAdapter = new charAdapter();
+        charAdapter = new CharacterAdapter();
         recyclerView.setAdapter(charAdapter);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://gateway.marvel.com/v1/public/")

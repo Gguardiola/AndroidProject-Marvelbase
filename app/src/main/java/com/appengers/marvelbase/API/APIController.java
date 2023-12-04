@@ -10,12 +10,13 @@ import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class APIController extends AppCompatActivity {
+public class APIController extends AppCompatActivity implements Serializable {
     //APIController: Methods to handle the API calls
     Resources res;
 
@@ -29,15 +30,16 @@ public class APIController extends AppCompatActivity {
         this.HASHKEY =this.res.getString(R.string.HASHKEY);
     }
 
+    public ArrayList<Creators> getCreators(){
+
+        return new ArrayList<Creators>();
+    }
 
 
 //    public ArrayList<Characters> getCharacters(){
 //
 //    }
 //    public ArrayList<Comics> getComics(){
-//
-//    }
-//    public ArrayList<Creators> getCreators(){
 //
 //    }
 //

@@ -1,8 +1,9 @@
 package com.appengers.marvelbase.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Creators {
+public class Creators implements Serializable {
     //Creators: Structure of the Creator objects received from API
 
     int id;
