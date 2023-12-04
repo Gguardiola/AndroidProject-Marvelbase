@@ -17,6 +17,7 @@ public class Creators {
         public String extension;
     }
 
+
     public class ComicsCreator {
         public int available;
         public List<Comic> items;
