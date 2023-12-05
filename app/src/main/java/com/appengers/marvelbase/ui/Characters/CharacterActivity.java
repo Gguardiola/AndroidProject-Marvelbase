@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appengers.marvelbase.API.APIController;
+import com.appengers.marvelbase.API.DBController;
+import com.appengers.marvelbase.API.DBController.Category;
 import com.appengers.marvelbase.R;
 
 import retrofit2.Retrofit;
@@ -25,6 +27,7 @@ public class CharacterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         APIController api = new APIController(getResources());
+        DBController db = new DBController(this);
 
         recyclerView = findViewById(R.id.recyChar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

@@ -1,7 +1,7 @@
 package com.appengers.marvelbase.Models;
 
 public class Characters {
-    //Characters: Structure of the Character objects received from APIç
+    //Characters: Structure of the Character objects received from API
 
     int id;
     String name;

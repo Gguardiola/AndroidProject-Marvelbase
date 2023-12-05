@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         btnCharacters = (ImageButton) findViewById(R.id.characters_btn);
         btnComics = (ImageButton) findViewById(R.id.comics_btn);
         btnFavorites = (ImageButton) findViewById(R.id.favorites_btn);
+
+        Picasso.get().load("https://i.imgur.com/BZjjUob.png").fit().into(btnCharacters);
+        Picasso.get().load("https://i.imgur.com/u4qkDYA.png").fit().into(btnCreators);
+        Picasso.get().load("https://i.imgur.com/HU8rPIc.png").fit().into(btnComics);
+        Picasso.get().load("https://i.imgur.com/WqWiTg0.png").fit().into(btnFavorites);
 
         btnCreators.setOnClickListener(new View.OnClickListener() {
             @Override
