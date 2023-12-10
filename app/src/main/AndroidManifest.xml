@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_mainlogo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Marvelbase"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.Creators.CreatorsDetails"
+            android:exported="false" />
         <activity
             android:name=".ui.Characters.CharacterActivity"
             android:exported="false" />
