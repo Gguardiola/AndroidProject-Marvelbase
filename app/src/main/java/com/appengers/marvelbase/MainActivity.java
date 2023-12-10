@@ -53,19 +53,6 @@ public class MainActivity extends AppCompatActivity {
             db.setUserId();
         }
 
-        //TEST FIRESTORE
-        //db.addFavorite(Category.CREATORS, 12345);
-        //db.addFavorite(Category.CREATORS, 12345678);
-
-        //db.addFavorite(Category.COMICS, 123123);
-        //db.addFavorite(Category.COMICS, 231231231);
-
-        //db.addFavorite(Category.CHARACTERS, 66666);
-        //db.addFavorite(Category.CHARACTERS, 4545555);
-
-        //db.deleteFavorite(Category.CHARACTERS, 4545555);
-        //db.addFavorite(Category.CHARACTERS, 66666);
-
         btnCreators = (ImageButton) findViewById(R.id.creators_btn);
         btnCharacters = (ImageButton) findViewById(R.id.characters_btn);
         btnComics = (ImageButton) findViewById(R.id.comics_btn);

@@ -2,6 +2,7 @@ package com.appengers.marvelbase.ui.Creators;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appengers.marvelbase.MainActivity;
+import com.appengers.marvelbase.ui.Characters.CharacterActivity;
+import com.bumptech.glide.Glide;
+import android.content.Intent;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +31,11 @@ import java.util.ArrayList;
 public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyViewHolder> {
 
     private ArrayList<Creators> creatorsList;
+    public ActivityResultLauncher<Intent> startCreatorsDetailsAct;
     private Context context;
     private OnClickListener onClickListener;
     private int selectedItem;
+    Creators selectedCreator;
 
     private MyViewHolder lastItem = null;
 
@@ -62,8 +71,7 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull CreatorsAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        Picasso.get().load(creatorsList.get(position).getThumbnail()).fit().into(holder.creatorImg);
+        Glide.with(holder.itemView.getContext()).load(creatorsList.get(position).getThumbnail()).fitCenter().into(holder.creatorImg);
         holder.fullName.setText(String.valueOf(creatorsList.get(position).getFirstName()));
 
         //current clicked item handler
@@ -75,8 +83,12 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
                 }
                 else{
                     if(lastItem != null) {
-                        lastItem.creatorCard.setBackgroundColor(Color.WHITE);
+                        lastItem.creatorCard.setBackgroundColor(Color.parseColor("#EEEEEE"));
                     }
+                    Intent intent = new Intent(context, CreatorsDetails.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("creatorId", creatorsList.get(position).getId());
+                    context.startActivity(intent);
                     lastItem = holder;
                     holder.creatorCard.setBackgroundColor(Color.parseColor("#D4EFDF"));
                     setSelectedItem(position);
@@ -86,10 +98,15 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
     }
     private void setSelectedItem(int position){
         this.selectedItem = position;
-        Log.d("ITEM SELECTED: ", String.valueOf(creatorsList.get(selectedItem).getFirstName()));
+        selectedCreator = creatorsList.get(selectedItem);
+        Log.d("ITEM SELECTED: ", String.valueOf(creatorsList.get(selectedItem).getId()));
     }
     public int getSelectedItem(){
         return this.selectedItem;
+    }
+
+    public Creators getSelectedCreator(){
+        return this.selectedCreator;
     }
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
