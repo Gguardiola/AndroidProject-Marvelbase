@@ -64,7 +64,7 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
     public void onBindViewHolder(@NonNull CreatorsAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Picasso.get().load(creatorsList.get(position).getThumbnail()).fit().into(holder.creatorImg);
-        holder.fullName.setText(String.valueOf(creatorsList.get(position).getfirstName()));
+        holder.fullName.setText(String.valueOf(creatorsList.get(position).getFirstName()));
 
         //current clicked item handler
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
     }
     private void setSelectedItem(int position){
         this.selectedItem = position;
-        Log.d("ITEM SELECTED: ", String.valueOf(creatorsList.get(selectedItem).getfirstName()));
+        Log.d("ITEM SELECTED: ", String.valueOf(creatorsList.get(selectedItem).getFirstName()));
     }
     public int getSelectedItem(){
         return this.selectedItem;

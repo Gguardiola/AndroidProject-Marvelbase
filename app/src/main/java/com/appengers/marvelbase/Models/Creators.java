@@ -30,15 +30,15 @@ public class Creators implements Serializable {
     public int getId(){
         return id;
     }
-    public String getfirstName(){
+    public String getFirstName(){
         return firstName;
     }
-    public String getlastName(){
+    public String getLastName(){
         return lastName;
     }
 
     public String getThumbnail() {
-        return String.valueOf(thumbnail.path + thumbnail.extension);
+        return String.valueOf(thumbnail.path +"."+thumbnail.extension);
     }
 
     public Comics getComics(){return comics;}
