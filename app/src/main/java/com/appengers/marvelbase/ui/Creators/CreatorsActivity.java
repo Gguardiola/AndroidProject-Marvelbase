@@ -62,12 +62,5 @@ public class CreatorsActivity extends AppCompatActivity {
         //mandatory! when the adapter is created, call the fetch
         fetchCreators(adapter, 0, 20);
         ImageButton fabFavorite = (ImageButton)findViewById(R.id.favorite_btn);
-        fabFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Creators selectedCreator = adapter.getSelectedCreator();
-                db.addFavorite(DBController.Category.CREATORS, selectedCreator.getId());
-            }
-        });
     }
 }
