@@ -62,8 +62,13 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull CreatorsAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        Picasso.get().load(creatorsList.get(position).getThumbnail()).fit().into(holder.creatorImg);
+        Creators creators = creatorsList.get(position);
+        if (creators.getThumbnail() != null && creators.getThumbnail().path != null) {
+            String imageUrl = creators.getThumbnail().path + "." + creators.getThumbnail().extension;
+            // Cambia 'http' a 'https'
+            imageUrl = imageUrl.replace("http://", "https://");
+            Picasso.get().load(imageUrl).fit().into(holder.creatorImg);
+        }
         holder.fullName.setText(String.valueOf(creatorsList.get(position).getFirstName()));
 
         //current clicked item handler

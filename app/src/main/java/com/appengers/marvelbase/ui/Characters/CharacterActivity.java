@@ -1,25 +1,26 @@
 package com.appengers.marvelbase.ui.Characters;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-
+import com.appengers.marvelbase.API.APICallback;
 import com.appengers.marvelbase.API.APIController;
-import com.appengers.marvelbase.API.DBController;
-import com.appengers.marvelbase.API.DBController.Category;
+import com.appengers.marvelbase.Models.Characters;
 import com.appengers.marvelbase.R;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.ArrayList;
 
 public class CharacterActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+    ArrayList<Characters> charactersList;
 
-    private RecyclerView recyclerView;
-    private CharacterAdapter charAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,39 +28,42 @@ public class CharacterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         APIController api = new APIController(getResources());
-        DBController db = new DBController(this);
 
         recyclerView = findViewById(R.id.recyChar);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        charAdapter = new CharacterAdapter();
-        recyclerView.setAdapter(charAdapter);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://gateway.marvel.com/v1/public/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        charactersList = new ArrayList<>();
+        CharacterAdapter characterAdapter = new CharacterAdapter(getApplicationContext(), charactersList);
 
-       // MarvelApiService appengers = retrofit.create(MarvelApiService.class);
+        characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Aquí puedes manejar la lógica cuando se hace clic en un elemento
+                // Por ejemplo, abrir una nueva actividad o mostrar detalles en un fragmento.
+                characterAdapter.clearSelection();
+            }
+        });
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(characterAdapter);
 
-       // getCharData(appengers, 1);
+        getCharData(characterAdapter);
     }
-    //private void getPokemonData(final MarvelApiService appengers, final int charNumber) {
-    //    appengers.getChar(String.valueOf(charNumber)).enqueue(new Callback<Characters>() {
-    //        @Override
-    //        public void onResponse(Call<Characters> call, Response<Characters> response) {
-    //            if (response.isSuccessful()) {
-    //                Characters p = response.body();
-    //                charAdapter.addCharacter(p);
-//
-    //                if (charNumber < 20) {
-    //                    getPokemonData(appengers, charNumber + 1);
-    //                }
-    //            }
-    //        }
-//
-    //        @Override
-    //        public void onFailure(Call<Characters> call, Throwable t) {
-//
-    //        }
-    //    });
-    //}
+
+    private void getCharData(CharacterAdapter adapter) {
+        APIController appengers = new APIController(getResources());
+
+        appengers.getChar(0, 20, new APICallback<ArrayList<Characters>>() {
+            @Override
+            public void onSuccess(ArrayList<Characters> charactersList) {
+                adapter.setItems(charactersList);
+                adapter.notifyDataSetChanged();
+                Log.d("CharacterActivity", "API Call successful. Number of characters: " + charactersList.size());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e("CharacterActivity", "Error al cargar el personaje", t);
+            }
+        });
+    }
 }

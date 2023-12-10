@@ -37,8 +37,8 @@ public class Creators implements Serializable {
         return lastName;
     }
 
-    public String getThumbnail() {
-        return String.valueOf(thumbnail.path +"."+thumbnail.extension);
+    public Thumbnail getThumbnail() {
+        return thumbnail;
     }
 
     public Comics getComics(){return comics;}

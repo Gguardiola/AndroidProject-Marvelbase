@@ -10,6 +10,7 @@ import com.appengers.marvelbase.Models.Characters;
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,14 +41,14 @@ public class APIController extends AppCompatActivity implements Serializable {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
-        Call<APIResponse> call = service.getCreators(PUBLICKEY, 1, HASHKEY, offset, limit);
-        call.enqueue(new Callback<APIResponse>() {
+        Call<APIResponse<CreatorsData>> call = service.getCreators(PUBLICKEY, 1, HASHKEY, offset, limit);
+        call.enqueue(new Callback<APIResponse<CreatorsData>>() {
             @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+            public void onResponse(Call<APIResponse<CreatorsData>> call, Response<APIResponse<CreatorsData>> response) {
                 if (response.isSuccessful()) {
                     APIResponse creatorsResponse = response.body();
                     if (creatorsResponse != null) {
-                        CreatorsData data = creatorsResponse.getData();
+                        CreatorsData data = (CreatorsData)creatorsResponse.getData();
                         if (data != null) {
                             ArrayList<Creators> creatorsList = data.getResults();
                             //mandatory! this callback retrieves to the onSuccess
@@ -59,7 +60,37 @@ public class APIController extends AppCompatActivity implements Serializable {
                 }
             }
             @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
+            public void onFailure(Call<APIResponse<CreatorsData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+            }
+        });
+    }
+    public void getChar(int offset, int limit, APICallback callback){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+        Call<APIResponse<CharactersData>> call = service.getChar(PUBLICKEY, 1, HASHKEY, offset, limit);
+        call.enqueue(new Callback<APIResponse<CharactersData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CharactersData>> call, Response<APIResponse<CharactersData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse characterResponse = response.body();
+                    if (characterResponse != null) {
+                        CharactersData data = (CharactersData) characterResponse.getData();
+                        if (data != null) {
+                            ArrayList<Characters> charactersList = data.getResults();
+                            //mandatory! this callback retrieves to the onSuccess
+                            callback.onSuccess(charactersList);
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<CharactersData>> call, Throwable t) {
                 //TODO: check if this is mandatory
             }
         });
@@ -72,10 +103,11 @@ public class APIController extends AppCompatActivity implements Serializable {
 //
 //    }
 
-    public class APIResponse {
+    public class APIResponse<T> {
         private int code;
         private String status;
-        private CreatorsData data;
+        @SerializedName("data")
+        private T data;
 
         public int getCode() {
             return code;
@@ -84,7 +116,8 @@ public class APIController extends AppCompatActivity implements Serializable {
         public String getStatus() {
             return status;
         }
-        public CreatorsData getData() {
+
+        public T getData() {
             return data;
         }
     }
