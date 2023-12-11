@@ -2,7 +2,6 @@ package com.appengers.marvelbase.API;
 
 
 import android.content.res.Resources;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +34,7 @@ public class APIController extends AppCompatActivity implements Serializable {
         this.HASHKEY =this.res.getString(R.string.HASHKEY);
     }
 
-    public void getCreators(int offset, int limit, APICallback callback){
+    public void getCreators(int offset, int limit, APICallback<ArrayList<Creators>> callback){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,9 +45,9 @@ public class APIController extends AppCompatActivity implements Serializable {
             @Override
             public void onResponse(Call<APIResponse<CreatorsData>> call, Response<APIResponse<CreatorsData>> response) {
                 if (response.isSuccessful()) {
-                    APIResponse creatorsResponse = response.body();
+                    APIResponse<CreatorsData> creatorsResponse = response.body();
                     if (creatorsResponse != null) {
-                        CreatorsData data = (CreatorsData)creatorsResponse.getData();
+                        CreatorsData data = creatorsResponse.getData();
                         if (data != null) {
                             ArrayList<Creators> creatorsList = data.getResults();
                             //mandatory! this callback retrieves to the onSuccess
@@ -65,7 +64,37 @@ public class APIController extends AppCompatActivity implements Serializable {
             }
         });
     }
-    public void getChar(int offset, int limit, APICallback callback){
+    public void getCreator(int creatorId, APICallback<ArrayList<Creators>> callback){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+        Call<APIResponse<CreatorsData>> call = service.getCreatorsById(creatorId, PUBLICKEY, 1, HASHKEY);
+        call.enqueue(new Callback<APIResponse<CreatorsData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CreatorsData>> call, Response<APIResponse<CreatorsData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<CreatorsData> creatorsResponse = response.body();
+                    if (creatorsResponse != null) {
+                        CreatorsData data = creatorsResponse.getData();
+                        if (data != null) {
+                            ArrayList<Creators> creatorsList = data.getResults();
+                            //mandatory! this callback retrieves to the onSuccess
+                            callback.onSuccess(creatorsList);
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<CreatorsData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+            }
+        });
+    }
+    public void getChar(int offset, int limit, APICallback<ArrayList<Characters>> callback){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -76,9 +105,9 @@ public class APIController extends AppCompatActivity implements Serializable {
             @Override
             public void onResponse(Call<APIResponse<CharactersData>> call, Response<APIResponse<CharactersData>> response) {
                 if (response.isSuccessful()) {
-                    APIResponse characterResponse = response.body();
+                    APIResponse<CharactersData> characterResponse = response.body();
                     if (characterResponse != null) {
-                        CharactersData data = (CharactersData) characterResponse.getData();
+                        CharactersData data = characterResponse.getData();
                         if (data != null) {
                             ArrayList<Characters> charactersList = data.getResults();
                             //mandatory! this callback retrieves to the onSuccess

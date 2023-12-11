@@ -61,6 +61,5 @@ public class CreatorsActivity extends AppCompatActivity {
         creators_recycler.setAdapter(adapter);
         //mandatory! when the adapter is created, call the fetch
         fetchCreators(adapter, 0, 20);
-        ImageButton fabFavorite = (ImageButton)findViewById(R.id.favorite_btn);
     }
 }

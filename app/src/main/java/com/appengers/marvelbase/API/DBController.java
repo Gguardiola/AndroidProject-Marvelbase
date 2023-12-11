@@ -8,21 +8,16 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.appengers.marvelbase.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DBController {
@@ -89,6 +84,35 @@ public class DBController {
                         docRef.update(currentCategory, focusItemArray);
                         Log.d("DB - ADDED FAVORITE TO "+userId+" on "+currentCategory+":",String.valueOf(itemId));
                     }
+                }
+            }
+        });
+    }
+
+    public void checkFavorite(int itemId, Category category, APICallback<Boolean> callback){
+        String currentCategory = category.name().toLowerCase();
+        DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Boolean isFound = false;
+                    ArrayList<Long> creatorsArray = (ArrayList<Long>) document.get(currentCategory);
+                    for (Long item : creatorsArray) {
+                        if(String.valueOf(item).equals(String.valueOf(itemId))){
+                            Log.d("CREATOR FOUND!", "OLEE");
+                            isFound = true;
+                        }
+                    }
+                    callback.onSuccess(isFound);
+                }
+                else {
+                    //TODO: check if mandatory handle
+                }
+            } else {
+                Exception exception = task.getException();
+                if (exception != null) {
+                    exception.printStackTrace();
                 }
             }
         });
