@@ -30,5 +30,20 @@ public interface APIHandlerInterface {
             @Query("offset") int offset,
             @Query("limit") int limit
     );
+    @GET("comics")
+    Call<APIController.APIResponse<APIController.ComicsData>> getComics(
+            @Query("apikey") String apiKey,
+            @Query("ts") long timestamp,
+            @Query("hash") String hash,
+            @Query("offset") int offset,
+            @Query("limit") int limit
+    );
+    @GET("comics/{id}")
+    Call<APIController.APIResponse<APIController.ComicsData>> getComicsById(
+            @Path("id") int comicsId,
+            @Query("apikey") String apiKey,
+            @Query("ts") long timestamp,
+            @Query("hash") String hash
+    );
 }
 
