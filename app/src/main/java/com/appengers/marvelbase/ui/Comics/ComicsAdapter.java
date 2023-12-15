@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
             comicsImg = itemView.findViewById(R.id.comicsImg);
             comicsName = itemView.findViewById(R.id.comicsName);
             comicsCard = itemView.findViewById(R.id.comicsCard);
+            comicsPrice = itemView.findViewById(R.id.comicsPrice);
         }
 
     }

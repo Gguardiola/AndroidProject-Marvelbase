@@ -80,6 +80,7 @@ public class Comics {
         for (Prices price : prices) {
             if (pricesStringBuilder.length() < 1) {
                 pricesStringBuilder.append("Price: " + price.getPrice().toString()+"$");
+                break;
             }
         }
         return pricesStringBuilder.toString();
