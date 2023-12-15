@@ -127,8 +127,8 @@ public class DBController {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        ArrayList<Integer> focusItemArray = (ArrayList<Integer>) document.get(currentCategory);
-                        focusItemArray.remove(Integer.valueOf(itemId));
+                        ArrayList<Long> focusItemArray = (ArrayList<Long>) document.get(currentCategory);
+                        focusItemArray.remove(Long.valueOf(itemId));
                         docRef.update(currentCategory, focusItemArray);
                         Log.d("DB - DELETED FAVORITE TO "+userId+" on "+currentCategory+":",String.valueOf(itemId));
                     }
