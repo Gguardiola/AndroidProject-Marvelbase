@@ -37,7 +37,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
         private TextView comicsName;
         private ImageView comicsImg;
         private CardView comicsCard;
-
+        private TextView comicsPrice;
         public ComicsViewHolder (@NonNull View itemView) {
             super(itemView);
             comicsImg = itemView.findViewById(R.id.comicsImg);
@@ -60,7 +60,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
         Comics comics = comicsList.get(position);
         //Glide.with(holder.itemView.getContext()).load(comicsList.get(position).getThumbnail()).fitCenter().into(holder.comicsImg);
         holder.comicsName.setText(String.valueOf(comics.getTitle()));
-
+        holder.comicsPrice.setText(comics.getPrices());
         if (comics.getThumbnail() != null && comics.getThumbnail().path != null) {
             String imageUrl = comics.getThumbnail().path + "." + comics.getThumbnail().extension;
             // Cambia 'http' a 'https'
