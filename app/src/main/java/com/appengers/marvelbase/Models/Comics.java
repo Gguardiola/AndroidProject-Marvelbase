@@ -19,6 +19,7 @@ public class Comics {
         public Float price;
     }
 
+
     public class SeriesCom {
         public String resourceURI;
         public String name;
