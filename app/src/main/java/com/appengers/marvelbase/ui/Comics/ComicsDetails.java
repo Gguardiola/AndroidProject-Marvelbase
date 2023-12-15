@@ -18,21 +18,21 @@ import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ComicsDetails extends AppCompatActivity {
     Button backBtn, addFavoriteBtn, showComicsBtn;
     ImageButton comicsImg;
-    TextView comicsNameTxt, infoTxt, comicsPrice;
+    TextView comicsNameTxt, infoTxt;
     DBController db;
     Comics currentComics;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comics_details);
+        setContentView(R.layout.activity_creators_details);
         db = new DBController(this);
         db.setUserId();
 
@@ -61,8 +61,7 @@ public class ComicsDetails extends AppCompatActivity {
             }
         });
         showComicsBtn = (Button) findViewById(R.id.detailComics_btn);
-        comicsImg = (ImageButton) findViewById(R.id.comicsDetail_img);
-        comicsPrice = (TextView) findViewById(R.id.comicsPrice_txt);
+        comicsImg = (ImageButton) findViewById(R.id.detailCreator_img);
 
         fetchComic(comicsId);
     }
@@ -91,12 +90,9 @@ public class ComicsDetails extends AppCompatActivity {
             public void onSuccess(ArrayList<Comics> fetchedComics) {
                 currentComics = fetchedComics.get(0);
                 comicsNameTxt.setText(currentComics.getTitle());
-                comicsPrice.setText(currentComics.getPrices());
                 infoTxt.setText(String.valueOf(currentComics.getTitle()));
-                String imageUrl = currentComics.getThumbnail().path + "." + currentComics.getThumbnail().extension;
-                // Cambia 'http' a 'https'
-                imageUrl = imageUrl.replace("http://", "https://");
-                Picasso.get().load(imageUrl).fit().into(comicsImg);
+                Glide.with(getApplicationContext()).load(currentComics.getThumbnail()).fitCenter().into(comicsImg);
+
             }
             @Override
             public void onError(Throwable t) {
