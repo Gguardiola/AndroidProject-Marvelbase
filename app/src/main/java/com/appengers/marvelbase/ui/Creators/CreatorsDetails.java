@@ -29,6 +29,7 @@ public class CreatorsDetails extends AppCompatActivity {
     TextView creatorFullnameTxt, infoTxt;
     DBController db;
     Creators currentCreator;
+    Boolean isFavorite = false;
     
 
     @Override
@@ -57,9 +58,17 @@ public class CreatorsDetails extends AppCompatActivity {
         addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.addFavorite(DBController.Category.CREATORS, creatorId);
-                addFavoriteBtn.setEnabled(false);
-                Toast.makeText(CreatorsDetails.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
+                if(!isFavorite) {
+                    db.addFavorite(DBController.Category.CREATORS, creatorId);
+                    Toast.makeText(CreatorsDetails.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
+                    addFavoriteBtn.setText("Delete favorite");
+                    isFavorite = true;
+                }else{
+                    db.deleteFavorite(DBController.Category.CREATORS, creatorId);
+                    Toast.makeText(CreatorsDetails.this, "Deleted from favorites!", Toast.LENGTH_SHORT).show();
+                    addFavoriteBtn.setText("Favorite");
+                    isFavorite = false;
+                }
             }
         });
         showComicsBtn = (Button) findViewById(R.id.detailComics_btn);
@@ -72,10 +81,13 @@ public class CreatorsDetails extends AppCompatActivity {
         db.checkFavorite(creatorId, DBController.Category.CREATORS ,new  APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean exists) {
+                addFavoriteBtn.setEnabled(true);
                 if(exists) {
-                    addFavoriteBtn.setEnabled(false);
+                    addFavoriteBtn.setText("Delete favorite");
+                    isFavorite = true;
                 }else{
-                    addFavoriteBtn.setEnabled(true);
+                    addFavoriteBtn.setText("Favorite");
+                    isFavorite = false;
                 }
             }
             @Override

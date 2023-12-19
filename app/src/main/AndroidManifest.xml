@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.Favorites.FavoritesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Creators.CreatorsDetails"
             android:exported="false" />
         <activity

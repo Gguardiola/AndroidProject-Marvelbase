@@ -17,7 +17,11 @@ public class Comics {
     public static class Prices {
         public String type;
         public Float price;
+        public Float getPrice() {
+            return price;
+        }
     }
+
 
     public class SeriesCom {
         public String resourceURI;
@@ -71,9 +75,15 @@ public class Comics {
     public SeriesCom getSeries() {
         return series;
     }
-
-    public List<Prices> getPrices() {
-        return prices;
+    public String getPrices() {
+        StringBuilder pricesStringBuilder = new StringBuilder();
+        for (Prices price : prices) {
+            if (pricesStringBuilder.length() < 1) {
+                pricesStringBuilder.append("Price: " + price.getPrice().toString()+"$");
+                break;
+            }
+        }
+        return pricesStringBuilder.toString();
     }
 
     public List<TextObject> getTextObjects() {

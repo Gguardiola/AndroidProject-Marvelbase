@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,12 +36,13 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
         private TextView comicsName;
         private ImageView comicsImg;
         private CardView comicsCard;
-
+        private TextView comicsPrice;
         public ComicsViewHolder (@NonNull View itemView) {
             super(itemView);
             comicsImg = itemView.findViewById(R.id.comicsImg);
             comicsName = itemView.findViewById(R.id.comicsName);
             comicsCard = itemView.findViewById(R.id.comicsCard);
+            comicsPrice = itemView.findViewById(R.id.comicsPrice);
         }
 
     }
@@ -60,7 +60,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
         Comics comics = comicsList.get(position);
         //Glide.with(holder.itemView.getContext()).load(comicsList.get(position).getThumbnail()).fitCenter().into(holder.comicsImg);
         holder.comicsName.setText(String.valueOf(comics.getTitle()));
-
+        holder.comicsPrice.setText(comics.getPrices());
         if (comics.getThumbnail() != null && comics.getThumbnail().path != null) {
             String imageUrl = comics.getThumbnail().path + "." + comics.getThumbnail().extension;
             // Cambia 'http' a 'https'
