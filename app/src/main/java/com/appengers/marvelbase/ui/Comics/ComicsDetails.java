@@ -1,15 +1,21 @@
 package com.appengers.marvelbase.ui.Comics;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appengers.marvelbase.API.APICallback;
@@ -25,9 +31,11 @@ import java.util.ArrayList;
 public class ComicsDetails extends AppCompatActivity {
     Button backBtn, addFavoriteBtn, showComicsBtn;
     ImageButton comicsImg;
-    TextView comicsNameTxt, infoTxt, comicsPrice;
+    TextView comicsNameTxt, infoTxt, comicsPrice, favorites;
     DBController db;
     Comics currentComics;
+
+    SearchView searchView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +50,44 @@ public class ComicsDetails extends AppCompatActivity {
         comicsNameTxt = (TextView) findViewById(R.id.comicsName_txt);
         infoTxt = (TextView) findViewById(R.id.info_txt);
         backBtn = (Button) findViewById(R.id.back_btn);
+        favorites = (TextView) findViewById(R.id.favorites);
+        searchView = findViewById(R.id.busca);
+        // Set up a listener for the SearchView
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform the search operation here
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform filtering as the user types
+                return true;
+            }
+        });
+
+        // Set up a listener for the SearchView expansion
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform actions when the SearchView is expanded
+                // For example, you can update the UI or show additional options
+                Log.d("MSG", "HOLA");
+                favorites.setVisibility(GONE);
+            }
+        });
+
+        // Set up a listener for the SearchView collapse
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                // Perform actions when the SearchView is collapsed
+                // For example, you can reset the UI or hide additional options
+                favorites.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +96,7 @@ public class ComicsDetails extends AppCompatActivity {
                 finish();
             }
         });
+
         addFavoriteBtn = (Button) findViewById(R.id.addFavorite_btn);
         addFavoriteBtn.setEnabled(false);
         checkFavorite(comicsId);
@@ -98,7 +145,6 @@ public class ComicsDetails extends AppCompatActivity {
                 // Cambia 'http' a 'https'
                 imageUrl = imageUrl.replace("http://", "https://");
                 Picasso.get().load(imageUrl).fit().into(comicsImg);
-
             }
             @Override
             public void onError(Throwable t) {
@@ -106,4 +152,5 @@ public class ComicsDetails extends AppCompatActivity {
             }
         });
     }
+
 }
