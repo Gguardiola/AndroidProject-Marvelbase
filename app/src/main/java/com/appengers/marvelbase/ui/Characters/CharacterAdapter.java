@@ -1,6 +1,7 @@
 package com.appengers.marvelbase.ui.Characters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,19 +30,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     private Context context;
     private OnItemClickListener onClickListener;
     private int selectedItem;
+    Characters selectedCharacter;
 
-    private CreatorsAdapter.MyViewHolder lastItem = null;
+    private CharactersViewHolder lastItem = null;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
-    public void clearSelection() {
-        selectedPosition = -1;
-        notifyDataSetChanged();
-    }
 
     private OnItemClickListener listener;
-    private int selectedPosition = RecyclerView.NO_POSITION;
     public void setItems(ArrayList<Characters> charactersList) {
         this.charactersList = charactersList;
     }
@@ -59,14 +56,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         return new CharactersViewHolder(view);
     }
 
-    public int getSelectedPosition() {
-        return selectedPosition;
-    }
     public void onBindViewHolder(@NonNull CharactersViewHolder holder, int position) {
         Characters character = charactersList.get(position);
         holder.charName.setText(character.getName());
-
-        boolean isSelected = (position == selectedPosition);
+        holder.charID.setText(String.valueOf(character.getId()));
 
         if (character.getThumbnail() != null && character.getThumbnail().path != null) {
             String imageUrl = character.getThumbnail().path + "." + character.getThumbnail().extension;
@@ -75,8 +68,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             Picasso.get().load(imageUrl).fit().into(holder.charIMG);
         }
 
-
-        holder.chars.setBackgroundColor(isSelected ? Color.GREEN : Color.WHITE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,22 +75,27 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                 if (onClickListener != null) {
                     onClickListener.onItemClick(position);
                 } else {
-                    if (position == selectedPosition) {
-                        // Deseleccionar si se hace clic en el mismo elemento
-                        selectedPosition = RecyclerView.NO_POSITION;
-                    } else {
-                        // Seleccionar el nuevo elemento
-                        selectedPosition = position;
-                    }
-                    notifyDataSetChanged();
+                    Intent intent = new Intent(context, CharacterDetails.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("characterId", charactersList.get(position).getId());
+                    Log.d("IDIDIDID12", "Character ID: " + charactersList.get(position).getName());
+                    context.startActivity(intent);
+                    lastItem = holder;
+                    //holder.creatorCard.setBackgroundColor(Color.parseColor("#D4EFDF"));
+                    setSelectedItem(position);
+
                 }
             }
         });
     }
 
     private void setSelectedItem(int position) {
-        this.selectedPosition = position;
-        Log.d("ITEM SELECTED: ", String.valueOf(charactersList.get(selectedPosition).getName()));
+        this.selectedItem = position;
+        selectedCharacter = charactersList.get(selectedItem);
+        Log.d("ITEM SELECTED: ", String.valueOf(charactersList.get(selectedItem).getName()));
+    }
+    public Characters getSelectedCreator(){
+        return this.selectedCharacter;
     }
     public int getItemCount() {
         return charactersList.size();
