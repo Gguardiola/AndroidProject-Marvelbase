@@ -2,6 +2,7 @@ package com.appengers.marvelbase.API;
 
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 import com.google.gson.annotations.SerializedName;
+import com.google.protobuf.StringValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -124,13 +126,113 @@ public class APIController extends AppCompatActivity implements Serializable {
             }
         });
     }
+    public void getCharacter(int characterId, APICallback<ArrayList<Characters>> callback){
+        Log.d("CharacterIdLog", "Character ID: " + characterId);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+
+        Call<APIResponse<CharactersData>> call = service.getCharById(characterId, PUBLICKEY, 1, HASHKEY);
+        call.enqueue(new Callback<APIResponse<CharactersData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CharactersData>> call, Response<APIResponse<CharactersData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<CharactersData> charactersResponse = response.body();
+                    if (charactersResponse != null) {
+                        CharactersData data = charactersResponse.getData();
+                        if (data != null) {
+                            ArrayList<Characters> characterList = data.getResults();
+                            //mandatory! this callback retrieves to the onSuccess
+                            callback.onSuccess(characterList);
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<CharactersData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+            }
+        });
+    }
 
 //    public ArrayList<Characters> getCharacters(){
 //
 //    }
-//    public ArrayList<Comics> getComics(){
-//
-//    }
+    public void getComics(int offset, int limit, APICallback<ArrayList<Comics>> callback){
+         Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+        Call<APIResponse<ComicsData>> call = service.getComics(PUBLICKEY, 1, HASHKEY, offset, limit);
+        Log.d("API r:", "URL: " + call.request().url());
+        call.enqueue(new Callback<APIResponse<ComicsData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ComicsData>> call, Response<APIResponse<ComicsData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<ComicsData> comicsResponse = response.body();
+                    if (comicsResponse != null) {
+                        ComicsData data = comicsResponse.getData();
+                        if (data != null) {
+                            ArrayList<Comics> comicsList = data.getResults();
+                            if (comicsList != null && !comicsList.isEmpty()) {
+                                // Esta callback recupera el resultado en caso de éxito
+                                callback.onSuccess(comicsList);
+                            } else {
+                                // Manejar el caso de lista vacía según sea necesario
+                                // Puede ser útil emitir una advertencia o establecer un valor predeterminado
+                                Log.w("API Warning", "La lista de cómics está vacía.");
+                                // Puedes llamar a la callback de onSuccess con una lista vacía o null según tu lógica
+                                callback.onSuccess(null);
+                            }
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                    Log.e("API Error", "Code: " + response.code() + ", msg" + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<ComicsData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+                Log.e("API Error", "Code: " + t.getMessage());
+            }
+        });
+    }
+    public void getComic(int comicsId, APICallback<ArrayList<Comics>> callback){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+        Call<APIResponse<ComicsData>> call = service.getComicsById(comicsId, PUBLICKEY, 1, HASHKEY);
+        call.enqueue(new Callback<APIResponse<ComicsData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ComicsData>> call, Response<APIResponse<ComicsData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<ComicsData> comicsResponse = response.body();
+                    if (comicsResponse != null) {
+                        ComicsData data = comicsResponse.getData();
+                        if (data != null) {
+                            ArrayList<Comics> comicsList = data.getResults();
+                            //mandatory! this callback retrieves to the onSuccess
+                            callback.onSuccess(comicsList);
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<ComicsData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+            }
+        });
+    }
 
     public class APIResponse<T> {
         private int code;

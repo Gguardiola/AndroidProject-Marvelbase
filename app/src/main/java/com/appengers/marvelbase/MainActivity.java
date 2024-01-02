@@ -14,6 +14,7 @@ import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.API.DBController.Category;
 import com.appengers.marvelbase.ui.Characters.CharacterActivity;
+import com.appengers.marvelbase.ui.Comics.ComicsActivity;
 import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 
 import android.content.Context;
@@ -36,7 +37,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnCharacters, btnComics, btnFavorites, btnCreators;
-    private ActivityResultLauncher<Intent> startCharacterAct, startCreatorAct;
+    private ActivityResultLauncher<Intent> startCharacterAct, startCreatorAct, startComicsAct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 startCharacterAct.launch(intent);
             }
         });
+        btnComics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ComicsActivity.class);
+                startComicsAct.launch(intent);
+            }
+        });
         // ACTIVITY INTENT STARTERS //
         startCreatorAct = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -87,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         startCharacterAct = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+
+                    }
+                }
+        );
+        startComicsAct = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {

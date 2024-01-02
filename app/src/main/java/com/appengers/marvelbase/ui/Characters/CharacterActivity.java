@@ -33,14 +33,7 @@ public class CharacterActivity extends AppCompatActivity {
         charactersList = new ArrayList<>();
         CharacterAdapter characterAdapter = new CharacterAdapter(getApplicationContext(), charactersList);
 
-        characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                // Aquí puedes manejar la lógica cuando se hace clic en un elemento
-                // Por ejemplo, abrir una nueva actividad o mostrar detalles en un fragmento.
-                characterAdapter.clearSelection();
-            }
-        });
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

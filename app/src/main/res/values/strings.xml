@@ -9,4 +9,6 @@
     <string name="______label_ek2_string">Comics</string>
     <string name="______label_ek3_string">Favorites</string>
     <string name="component_name_string">Welcome back! </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

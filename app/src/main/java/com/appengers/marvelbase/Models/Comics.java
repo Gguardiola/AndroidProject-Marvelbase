@@ -1,25 +1,61 @@
 package com.appengers.marvelbase.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comics {
-    //Comics: Structure of the Comic objects received from API
     int id;
     String title;
     String pageCount;
-    TextObjectsCom textObjects;
     SeriesCom series;
-    PricesCom prices;
     ThumbnailCom thumbnail;
-    CreatorsCom creators;
-    public Comics(int id, String title, String pageCount, TextObjectsCom textObjects, SeriesCom series, PricesCom prices, ThumbnailCom thumbnail, CreatorsCom creators) {
-        this.id = id;
-        this.title = title;
-        this.pageCount = pageCount;
-        this.textObjects = textObjects;
-        this.series = series;
-        this.prices = prices;
-        this.thumbnail = thumbnail;
-        this.creators = creators;
+    List<Prices> prices = new ArrayList<>();
+    List<TextObject> textObjects = new ArrayList<>();
+    List<Url> urls = new ArrayList<>();
+    Creator creators;
+
+    public static class Prices {
+        public String type;
+        public Float price;
+        public Float getPrice() {
+            return price;
+        }
     }
+
+
+    public class SeriesCom {
+        public String resourceURI;
+        public String name;
+    }
+
+    public class ThumbnailCom {
+        public String path;
+        public String extension;
+    }
+
+    public static class TextObject {
+        public String type;
+        public String language;
+        public String text;
+    }
+
+    public static class Url {
+        public String type;
+        public String url;
+    }
+
+    public class Creator {
+        int available;
+        String collectionURI;
+        List<ItemsCom> items = new ArrayList<>();
+        int returned;
+    }
+
+    public class ItemsCom {
+        String resourceURI;
+        String role;
+    }
+
     public int getId() {
         return id;
     }
@@ -32,80 +68,41 @@ public class Comics {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getPageCount() {
         return pageCount;
-    }
-
-    public void setPageCount(String pageCount) {
-        this.pageCount = pageCount;
-    }
-
-    public TextObjectsCom getTextObjects() {
-        return textObjects;
-    }
-
-    public void setTextObjects(TextObjectsCom textObjects) {
-        this.textObjects = textObjects;
     }
 
     public SeriesCom getSeries() {
         return series;
     }
-
-    public void setSeries(SeriesCom series) {
-        this.series = series;
+    public String getPrices() {
+        StringBuilder pricesStringBuilder = new StringBuilder();
+        for (Prices price : prices) {
+            if (pricesStringBuilder.length() < 1) {
+                pricesStringBuilder.append("Price: " + price.getPrice().toString()+"$");
+                break;
+            }
+        }
+        return pricesStringBuilder.toString();
     }
 
-    public PricesCom getPrices() {
-        return prices;
+    public List<TextObject> getTextObjects() {
+        return textObjects;
     }
 
-    public void setPrices(PricesCom prices) {
-        this.prices = prices;
+    public List<Url> getUrls() {
+        return urls;
     }
 
     public ThumbnailCom getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(ThumbnailCom thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public CreatorsCom getCreators() {
+    public Creator getCreators() {
         return creators;
     }
 
-    public void setCreators(CreatorsCom creators) {
+    public void setCreators(Creator creators) {
         this.creators = creators;
-    }
-
-    public class TextObjectsCom {
-        public String type;
-        public String language;
-        public String text;
-    }
-    public class SeriesCom {
-        public String resourceURI;
-        public String name;
-    }
-    public class PricesCom {
-        public String type;
-        public Float price;
-    }
-    public class ThumbnailCom {
-        public String path;
-        public String extension;
-    }
-    public class CreatorsCom {
-        ItemsCom items;
-    }
-    public class ItemsCom {
-        String resourceURI;
-        String role;
     }
 }

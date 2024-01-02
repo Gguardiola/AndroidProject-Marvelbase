@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.Characters.CharacterDetails"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Favorites.FavoritesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Creators.CreatorsDetails"
             android:exported="false" />
         <activity
@@ -24,6 +30,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.Creators.CreatorsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Comics.ComicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Comics.ComicsDetails"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
