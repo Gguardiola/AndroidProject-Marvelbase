@@ -32,12 +32,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.appengers.marvelbase.ui.Favorites.FavoritesActivity;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnCharacters, btnComics, btnFavorites, btnCreators;
-    private ActivityResultLauncher<Intent> startCharacterAct, startCreatorAct, startComicsAct;
+    private ActivityResultLauncher<Intent> startCharacterAct, startCreatorAct, startComicsAct, startFavoritesAct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
                 startComicsAct.launch(intent);
             }
         });
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FavoritesActivity.class);
+                startFavoritesAct.launch(intent);
+            }
+        });
         // ACTIVITY INTENT STARTERS //
         startCreatorAct = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -103,6 +112,14 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         startComicsAct = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+
+                    }
+                }
+        );
+        startFavoritesAct = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {

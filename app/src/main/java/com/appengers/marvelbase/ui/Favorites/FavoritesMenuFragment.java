@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.appengers.marvelbase.R;
 
-public class favoritesMenuFragment extends Fragment {
+public class FavoritesMenuFragment extends Fragment {
 
-    public favoritesMenuFragment() {
+    public FavoritesMenuFragment() {
         // Required empty public constructor
     }
 
