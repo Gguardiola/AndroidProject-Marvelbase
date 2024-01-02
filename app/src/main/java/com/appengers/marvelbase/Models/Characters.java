@@ -21,6 +21,12 @@ public class Characters implements Serializable {
         return name;
     }
 
+    public int getId(){return id;}
+
+    public String getDescription(){
+        return description;
+    }
+
     public Thumbnail getThumbnail() {
         return thumbnail;
     }

@@ -11,6 +11,7 @@ import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 import com.google.gson.annotations.SerializedName;
+import com.google.protobuf.StringValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -113,6 +114,38 @@ public class APIController extends AppCompatActivity implements Serializable {
                             ArrayList<Characters> charactersList = data.getResults();
                             //mandatory! this callback retrieves to the onSuccess
                             callback.onSuccess(charactersList);
+                        }
+                    }
+                } else {
+                    //TODO: check if this is mandatory
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<CharactersData>> call, Throwable t) {
+                //TODO: check if this is mandatory
+            }
+        });
+    }
+    public void getCharacter(int characterId, APICallback<ArrayList<Characters>> callback){
+        Log.d("CharacterIdLog", "Character ID: " + characterId);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+
+        Call<APIResponse<CharactersData>> call = service.getCharById(characterId, PUBLICKEY, 1, HASHKEY);
+        call.enqueue(new Callback<APIResponse<CharactersData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CharactersData>> call, Response<APIResponse<CharactersData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<CharactersData> charactersResponse = response.body();
+                    if (charactersResponse != null) {
+                        CharactersData data = charactersResponse.getData();
+                        if (data != null) {
+                            ArrayList<Characters> characterList = data.getResults();
+                            //mandatory! this callback retrieves to the onSuccess
+                            callback.onSuccess(characterList);
                         }
                     }
                 } else {
