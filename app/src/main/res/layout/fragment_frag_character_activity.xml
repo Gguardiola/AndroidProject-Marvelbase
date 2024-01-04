@@ -17,7 +17,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView"
-                android:name="com.appengers.marvelbase.ui.Characters.CharSearch"
+                android:name="com.appengers.marvelbase.ui.Searchbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />

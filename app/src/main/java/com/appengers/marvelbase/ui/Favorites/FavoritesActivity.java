@@ -32,15 +32,12 @@ public class FavoritesActivity extends AppCompatActivity implements ChangeFragme
         switch(k){
             case 1:
                 trans.replace(R.id.fragmentRecyclerFavoritesData, fragments[0]);
-                Toast.makeText(this, "FRAGMENT 1!", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 trans.replace(R.id.fragmentRecyclerFavoritesData, fragments[1]);
-                Toast.makeText(this, "FRAGMENT 2!", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 trans.replace(R.id.fragmentRecyclerFavoritesData, fragments[2]);
-                Toast.makeText(this, "FRAGMENT 3!", Toast.LENGTH_SHORT).show();
                 break;
         }
         trans.commit();
