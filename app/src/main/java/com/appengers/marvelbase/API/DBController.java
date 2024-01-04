@@ -88,7 +88,28 @@ public class DBController {
             }
         });
     }
-
+    public void getFavorites(Category category, APICallback<ArrayList<Long>> callback){
+        String currentCategory = category.name().toLowerCase();
+        DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Boolean isFound = false;
+                    ArrayList<Long> creatorsArray = (ArrayList<Long>) document.get(currentCategory);
+                    callback.onSuccess(creatorsArray);
+                }
+                else {
+                    //TODO: check if mandatory handle
+                }
+            } else {
+                Exception exception = task.getException();
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
     public void checkFavorite(int itemId, Category category, APICallback<Boolean> callback){
         String currentCategory = category.name().toLowerCase();
         DocumentReference docRef = db.collection("UsersFavorites").document(this.userId);
