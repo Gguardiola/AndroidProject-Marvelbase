@@ -11,48 +11,52 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appengers.marvelbase.API.APICallback;
 import com.appengers.marvelbase.API.APIController;
-import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
 
 import java.util.ArrayList;
 
 public class ComicsActivity extends AppCompatActivity {
-    RecyclerView comicsRecycler;
-    ArrayList<Comics> comicsList;
-    public void fetchComics(ComicsAdapter adapter, int offset, int limit) {
-        APIController api = new APIController(getResources());
-        api.getComics(offset, limit, new APICallback<ArrayList<Comics>>() {
 
+    RecyclerView recyclerView;
+    ArrayList<Comics> comicsList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comic);
+
+        Intent intent = getIntent();
+        APIController api = new APIController(getResources());
+
+        recyclerView = findViewById(R.id.recycComics);
+        comicsList = new ArrayList<>();
+        ComicsAdapter comicsAdapter = new ComicsAdapter(getApplicationContext(), comicsList);
+
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(comicsAdapter);
+
+        getComicsData(comicsAdapter);
+    }
+
+    private void getComicsData(ComicsAdapter adapter) {
+        APIController appengers = new APIController(getResources());
+
+        appengers.getComics(0, 20, new APICallback<ArrayList<Comics>>() {
             @Override
             public void onSuccess(ArrayList<Comics> comicsList) {
                 adapter.setItems(comicsList);
                 adapter.notifyDataSetChanged();
+                Log.d("ComicsActivity", "API Call successful. Number of comics: " + comicsList.size());
             }
+
             @Override
             public void onError(Throwable t) {
-                //Handle the error
-                Log.e("API Error", "Error fetching comics: " + t.getMessage());
+                Log.e("ComicsActivity", "Error al cargar el personaje", t);
             }
         });
-    }
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comic);
-        DBController db = new DBController(this);
-        db.setUserId();
-        //Retrieve the APIController object
-        Intent intent = getIntent();
-        comicsRecycler = (RecyclerView)findViewById(R.id.comicsRecycler);
-        //mandatory! initialize the ArrayList
-        comicsList = new ArrayList<>();
-        ComicsAdapter adapter;
-        adapter = new ComicsAdapter(getApplicationContext(), comicsList);
-        RecyclerView.LayoutManager l = new LinearLayoutManager(getApplicationContext());
-        comicsRecycler.setLayoutManager(l);
-        comicsRecycler.setItemAnimator(new DefaultItemAnimator());
-        comicsRecycler.setAdapter(adapter);
-        //mandatory! when the adapter is created, call the fetch
-        fetchComics(adapter, 0, 20);
     }
 }
