@@ -34,8 +34,6 @@ public class ComicsDetails extends AppCompatActivity {
     TextView comicsNameTxt, infoTxt, comicsPrice, favorites;
     DBController db;
     Comics currentComics;
-
-    SearchView searchView;
     Boolean isFavorite = false;
 
     @SuppressLint("MissingInflatedId")
@@ -51,7 +49,7 @@ public class ComicsDetails extends AppCompatActivity {
         comicsNameTxt = (TextView) findViewById(R.id.comicsName_txt);
         infoTxt = (TextView) findViewById(R.id.info_txt);
         backBtn = (Button) findViewById(R.id.back_btn);
-        favorites = (TextView) findViewById(R.id.favorites);
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
