@@ -1,5 +1,7 @@
 package com.appengers.marvelbase.ui;
 
+import static android.view.View.GONE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -114,6 +116,20 @@ public class Searchbar extends Fragment {
                     restoreOriginalList();
                 }
                 return true;
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityTitle.setVisibility(GONE);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                activityTitle.setVisibility(View.VISIBLE);
+                return false;
             }
         });
 
