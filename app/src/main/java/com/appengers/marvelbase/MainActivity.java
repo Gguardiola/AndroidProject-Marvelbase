@@ -14,6 +14,7 @@ import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.API.DBController.Category;
 import com.appengers.marvelbase.ui.Characters.CharacterActivity;
+import com.appengers.marvelbase.ui.Characters.FragCharacterActivity;
 import com.appengers.marvelbase.ui.Comics.ComicsActivity;
 import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         btnCharacters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CharacterActivity.class);
+                Intent intent = new Intent(v.getContext(), FragCharacterActivity.class);
                 startCharacterAct.launch(intent);
             }
         });

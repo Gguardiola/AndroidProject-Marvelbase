@@ -30,6 +30,13 @@ public interface APIHandlerInterface {
             @Query("offset") int offset,
             @Query("limit") int limit
     );
+    @GET("characters")
+    Call<APIController.APIResponse<APIController.CharactersData>> searchCharacter(
+            @Query("apikey") String apiKey,
+            @Query("ts") long timestamp,
+            @Query("hash") String hash,
+            @Query("nameStartsWith") String query
+    );
     @GET("characters/{id}")
     Call<APIController.APIResponse<APIController.CharactersData>> getCharById(
             @Path("id") int characterId,

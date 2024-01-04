@@ -126,6 +126,37 @@ public class APIController extends AppCompatActivity implements Serializable {
             }
         });
     }
+    public void searchCharacter(String query, APICallback<ArrayList<Characters>> callback) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+
+        Call<APIResponse<CharactersData>> call = service.searchCharacter(PUBLICKEY, 1, HASHKEY, query);
+        call.enqueue(new Callback<APIResponse<CharactersData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CharactersData>> call, Response<APIResponse<CharactersData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<CharactersData> charactersResponse = response.body();
+                    if (charactersResponse != null) {
+                        CharactersData data = charactersResponse.getData();
+                        if (data != null) {
+                            ArrayList<Characters> charactersList = data.getResults();
+                            callback.onSuccess(charactersList);
+                        }
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<CharactersData>> call, Throwable t) {
+                // Handle failure
+            }
+        });
+    }
     public void getCharacter(int characterId, APICallback<ArrayList<Characters>> callback){
         Log.d("CharacterIdLog", "Character ID: " + characterId);
         Retrofit retrofit = new Retrofit.Builder()
