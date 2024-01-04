@@ -20,11 +20,11 @@
             android:text="BACK" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/activityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CHARACTERS" />
+            android:text="..." />
 
         <SearchView
             android:id="@+id/busca"

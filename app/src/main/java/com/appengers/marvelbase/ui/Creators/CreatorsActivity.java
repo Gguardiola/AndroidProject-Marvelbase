@@ -48,6 +48,7 @@ public class CreatorsActivity extends AppCompatActivity implements ChangeFragmen
             case 2:
                 trans.replace(R.id.fragmentContainerRecyclerCreator, fragments[1]);
                 break;
+
         }
         trans.commit();
     }
