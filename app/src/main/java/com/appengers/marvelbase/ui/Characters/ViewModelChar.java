@@ -20,6 +20,7 @@ public class ViewModelChar extends ViewModel {
         name.setValue(n);
     }
 
+
     public MutableLiveData<ArrayList<Characters>> getCharactersData() {
         return charactersData;
     }
