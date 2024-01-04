@@ -26,6 +26,7 @@ public class DBController {
         CHARACTERS,
         COMICS,
         CREATORS,
+        FAVORITES,
     }
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SharedPreferences prefs;

@@ -28,4 +28,8 @@ public class ViewModelCreators extends ViewModel {
     public void setCreatorsData(ArrayList<Creators> creatorsList) {
         creatorsData.setValue(creatorsList);
     }
+
+    public void clearCreatorsData() {
+        creatorsData.setValue(new ArrayList<>());
+    }
 }

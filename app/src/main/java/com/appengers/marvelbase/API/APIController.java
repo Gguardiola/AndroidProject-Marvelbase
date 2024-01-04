@@ -11,7 +11,6 @@ import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 import com.google.gson.annotations.SerializedName;
-import com.google.protobuf.StringValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -93,6 +92,37 @@ public class APIController extends AppCompatActivity implements Serializable {
             @Override
             public void onFailure(Call<APIResponse<CreatorsData>> call, Throwable t) {
                 //TODO: check if this is mandatory
+            }
+        });
+    }
+    public void searchCreator(String query, APICallback<ArrayList<Creators>> callback) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+
+        Call<APIResponse<CreatorsData>> call = service.searchCreator(PUBLICKEY, 1, HASHKEY, query);
+        call.enqueue(new Callback<APIResponse<CreatorsData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<CreatorsData>> call, Response<APIResponse<CreatorsData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<CreatorsData> creatorsResponse = response.body();
+                    if (creatorsResponse != null) {
+                        CreatorsData data = creatorsResponse.getData();
+                        if (data != null) {
+                            ArrayList<Creators> creatorsList = data.getResults();
+                            callback.onSuccess(creatorsList);
+                        }
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<CreatorsData>> call, Throwable t) {
+                // Handle failure
             }
         });
     }

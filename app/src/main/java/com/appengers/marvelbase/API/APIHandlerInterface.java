@@ -21,6 +21,13 @@ public interface APIHandlerInterface {
             @Query("ts") long timestamp,
             @Query("hash") String hash
     );
+    @GET("creators")
+    Call<APIController.APIResponse<APIController.CreatorsData>> searchCreator(
+            @Query("apikey") String apiKey,
+            @Query("ts") long timestamp,
+            @Query("hash") String hash,
+            @Query("nameStartsWith") String query
+    );
 
     @GET("characters")
     Call<APIController.APIResponse<APIController.CharactersData>> getChar(
