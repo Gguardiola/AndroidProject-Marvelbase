@@ -1,21 +1,14 @@
 package com.appengers.marvelbase.ui.Comics;
 
-import static android.view.View.GONE;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appengers.marvelbase.API.APICallback;
@@ -23,7 +16,6 @@ import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,10 +27,8 @@ public class ComicsDetails extends AppCompatActivity {
     DBController db;
     Comics currentComics;
 
-    SearchView searchView;
     Boolean isFavorite = false;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +41,6 @@ public class ComicsDetails extends AppCompatActivity {
         comicsNameTxt = (TextView) findViewById(R.id.comicsName_txt);
         infoTxt = (TextView) findViewById(R.id.info_txt);
         backBtn = (Button) findViewById(R.id.back_btn);
-        favorites = (TextView) findViewById(R.id.favorites);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
