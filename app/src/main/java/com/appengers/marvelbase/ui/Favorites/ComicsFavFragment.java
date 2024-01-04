@@ -1,66 +1,96 @@
 package com.appengers.marvelbase.ui.Favorites;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.appengers.marvelbase.API.APICallback;
+import com.appengers.marvelbase.API.APIController;
+import com.appengers.marvelbase.API.DBController;
+import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.R;
+import com.appengers.marvelbase.ui.Comics.ComicsAdapter;
+import com.appengers.marvelbase.ui.Creators.CreatorsAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ComicsFavFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class ComicsFavFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    RecyclerView comicsRecycler;
+    ArrayList<Comics> comicsList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ArrayList<Long> favoriteIdList;
+
+    public void fetchComicsFavorites(ComicsAdapter adapter, int offset, int limit) {
+        DBController db = new DBController(this.getActivity().getApplicationContext());
+        db.setUserId();
+        db.getFavorites(DBController.Category.COMICS, new  APICallback<ArrayList<Long>>() {
+
+            @Override
+            public void onSuccess(ArrayList<Long> fetchedFavorites) {
+                favoriteIdList = fetchedFavorites;
+                fetchComics(favoriteIdList, adapter, offset, limit);
+            }
+            @Override
+            public void onError(Throwable t) {
+                //Handle the error
+                Log.e("API Error", "Error fetching creators: " + t.getMessage());
+            }
+        });
+    }
+    public void fetchComics(ArrayList<Long> favoriteIdList, ComicsAdapter adapter, int offset, int limit) {
+        APIController api = new APIController(getResources());
+
+        for (Long item : favoriteIdList) {
+            api.getComic(item.intValue(), new APICallback<ArrayList<Comics>>() {
+
+                @Override
+                public void onSuccess(ArrayList<Comics> fetchedComicsList) {
+                    comicsList.add(fetchedComicsList.get(0));
+                    adapter.setItems(comicsList);
+                    adapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onError(Throwable t) {
+                    //Handle the error
+                    Log.e("API Error", "Error fetching comics: " + t.getMessage());
+                }
+            });
+        }
+    }
 
     public ComicsFavFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ComicsFavFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ComicsFavFragment newInstance(String param1, String param2) {
-        ComicsFavFragment fragment = new ComicsFavFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comics_favorites, container, false);
+        View v = inflater.inflate(R.layout.fragment_comics_favorites, container, false);
+        DBController db = new DBController(this.getActivity().getApplicationContext());
+        db.setUserId();
+        //Retrieve the APIController object
+        //Intent intent = getIntent();
+        comicsRecycler = (RecyclerView) v.findViewById(R.id.comicsRecycler);
+        //mandatory! initialize the ArrayList
+        comicsList = new ArrayList<>();
+        ComicsAdapter adapter;
+        adapter = new ComicsAdapter(this.getActivity().getApplicationContext(), comicsList);
+        RecyclerView.LayoutManager l = new LinearLayoutManager(this.getActivity().getApplicationContext());
+        comicsRecycler.setLayoutManager(l);
+        comicsRecycler.setItemAnimator(new DefaultItemAnimator());
+        comicsRecycler.setAdapter(adapter);
+        //mandatory! when the adapter is created, call the fetch
+        fetchComicsFavorites(adapter, 0, 20);
+        
+        return v;
     }
 }
