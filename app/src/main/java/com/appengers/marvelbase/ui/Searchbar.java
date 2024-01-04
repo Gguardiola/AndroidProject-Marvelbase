@@ -29,6 +29,7 @@ import com.appengers.marvelbase.R;
 import com.appengers.marvelbase.ui.Characters.FragCharacterActivity;
 import com.appengers.marvelbase.ui.Characters.ViewModelChar;
 import com.appengers.marvelbase.ui.Comics.ComicsActivity;
+import com.appengers.marvelbase.ui.Comics.FragComicsActivity;
 import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 import com.appengers.marvelbase.ui.Creators.ViewModelCreators;
 
@@ -73,7 +74,7 @@ public class Searchbar extends Fragment {
                     Log.d("SEARCH ON", "Search in FragCharacterActivity");
                     currentCategory = DBController.Category.CHARACTERS;
                     activityTitle.setText(capitalizeFirstLetter(String.valueOf(currentCategory)));
-                } else if (activityClassName.equals(ComicsActivity.class.getSimpleName())) {
+                } else if (activityClassName.equals(FragComicsActivity.class.getSimpleName())) {
                     Log.d("SEARCH ON", "Search in ComicsActivity");
                     currentCategory = DBController.Category.COMICS;
                     activityTitle.setText(capitalizeFirstLetter(String.valueOf(currentCategory)));
