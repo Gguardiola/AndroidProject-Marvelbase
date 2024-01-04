@@ -29,6 +29,9 @@
             android:name=".ui.Characters.FragCharacterActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.Comics.FragComicsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Creators.CreatorsActivity"
             android:exported="false" />
         <activity

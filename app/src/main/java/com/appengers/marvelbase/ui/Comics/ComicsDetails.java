@@ -36,6 +36,7 @@ public class ComicsDetails extends AppCompatActivity {
     Comics currentComics;
 
     SearchView searchView;
+    Boolean isFavorite = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,43 +52,6 @@ public class ComicsDetails extends AppCompatActivity {
         infoTxt = (TextView) findViewById(R.id.info_txt);
         backBtn = (Button) findViewById(R.id.back_btn);
         favorites = (TextView) findViewById(R.id.favorites);
-        searchView = findViewById(R.id.busca);
-        // Set up a listener for the SearchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Perform the search operation here
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Perform filtering as the user types
-                return true;
-            }
-        });
-
-        // Set up a listener for the SearchView expansion
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Perform actions when the SearchView is expanded
-                // For example, you can update the UI or show additional options
-                Log.d("MSG", "HOLA");
-                favorites.setVisibility(GONE);
-            }
-        });
-
-        // Set up a listener for the SearchView collapse
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                // Perform actions when the SearchView is collapsed
-                // For example, you can reset the UI or hide additional options
-                favorites.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +67,20 @@ public class ComicsDetails extends AppCompatActivity {
         addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.addFavorite(DBController.Category.COMICS, comicsId);
-                addFavoriteBtn.setEnabled(false);
-                Toast.makeText(ComicsDetails.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
+                if(!isFavorite) {
+                    db.addFavorite(DBController.Category.COMICS, comicsId);
+                    Toast.makeText(ComicsDetails.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
+                    addFavoriteBtn.setText("Delete favorite");
+                    isFavorite = true;
+                }else{
+                    db.deleteFavorite(DBController.Category.COMICS, comicsId);
+                    Toast.makeText(ComicsDetails.this, "Deleted from favorites!", Toast.LENGTH_SHORT).show();
+                    addFavoriteBtn.setText("Favorite");
+                    isFavorite = false;
+                }
             }
         });
-        showComicsBtn = (Button) findViewById(R.id.detailComics_btn);
+
         comicsImg = (ImageButton) findViewById(R.id.comicsDetail_img);
         comicsPrice = (TextView) findViewById(R.id.comicsPrice_txt);
 
@@ -119,10 +91,13 @@ public class ComicsDetails extends AppCompatActivity {
         db.checkFavorite(comicsId, DBController.Category.COMICS ,new  APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean exists) {
+                addFavoriteBtn.setEnabled(true);
                 if(exists) {
-                    addFavoriteBtn.setEnabled(false);
+                    addFavoriteBtn.setText("Delete favorite");
+                    isFavorite = true;
                 }else{
-                    addFavoriteBtn.setEnabled(true);
+                    addFavoriteBtn.setText("Favorite");
+                    isFavorite = false;
                 }
             }
             @Override
