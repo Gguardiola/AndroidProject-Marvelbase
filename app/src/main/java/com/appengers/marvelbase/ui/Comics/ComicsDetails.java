@@ -29,14 +29,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ComicsDetails extends AppCompatActivity {
-    Button backBtn, addFavoriteBtn, showComicsBtn;
+    Button backBtn, addFavoriteBtn;
     ImageButton comicsImg;
-    TextView comicsNameTxt, infoTxt, comicsPrice, favorites;
+    TextView comicsNameTxt, infoTxt, comicsPrice;
     DBController db;
     Comics currentComics;
     Boolean isFavorite = false;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,6 @@ public class ComicsDetails extends AppCompatActivity {
         comicsNameTxt = (TextView) findViewById(R.id.comicsName_txt);
         infoTxt = (TextView) findViewById(R.id.info_txt);
         backBtn = (Button) findViewById(R.id.back_btn);
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

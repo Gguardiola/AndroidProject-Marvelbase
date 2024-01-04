@@ -56,6 +56,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
     public void onBindViewHolder(@NonNull ComicsViewHolder holder, int position) {
         Comics comic = comicsList.get(position);
         holder.comicsName.setText(comic.getTitle());
+        holder.comicsPrice.setText(String.valueOf(comic.getPrices()));
 
         if (comic.getThumbnail() != null && comic.getThumbnail().path != null) {
             String imageUrl = comic.getThumbnail().path + "." + comic.getThumbnail().extension;
@@ -73,7 +74,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
                 } else {
                     Intent intent = new Intent(context, ComicsDetails.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("comicsacterId", comicsList.get(position).getId());
+                    intent.putExtra("comicsId", comicsList.get(position).getId());
                     Log.d("IDIDIDID12", "Comics ID: " + comicsList.get(position).getTitle());
                     context.startActivity(intent);
                     lastItem = holder;
@@ -90,7 +91,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
         selectedComics = comicsList.get(selectedItem);
         Log.d("ITEM SELECTED: ", String.valueOf(comicsList.get(selectedItem).getTitle()));
     }
-    public Comics getSelectedCreator(){
+    public Comics getSelectedComics(){
         return this.selectedComics;
     }
     public int getItemCount() {
@@ -99,12 +100,14 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ComicsView
     static class ComicsViewHolder extends RecyclerView.ViewHolder {
         TextView comicsName;
         ImageView comicsIMG;
+        TextView comicsPrice;
         CardView comics;
 
         public ComicsViewHolder(@NonNull View itemView) {
             super(itemView);
             comicsName = itemView.findViewById(R.id.comicsName);
             comicsIMG = itemView.findViewById(R.id.comicsImg);
+            comicsPrice = itemView.findViewById(R.id.comicsPrice);
             comics = itemView.findViewById(R.id.comicsCard);
         }
 
