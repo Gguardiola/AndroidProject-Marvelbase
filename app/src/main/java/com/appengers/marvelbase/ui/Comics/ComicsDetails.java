@@ -21,12 +21,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ComicsDetails extends AppCompatActivity {
-    Button backBtn, addFavoriteBtn, showComicsBtn;
+    Button backBtn, addFavoriteBtn;
     ImageButton comicsImg;
-    TextView comicsNameTxt, infoTxt, comicsPrice, favorites;
+    TextView comicsNameTxt, infoTxt, comicsPrice;
     DBController db;
     Comics currentComics;
-
     Boolean isFavorite = false;
 
     @Override
