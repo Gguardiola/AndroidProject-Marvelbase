@@ -1,13 +1,10 @@
-package com.appengers.marvelbase.ui.Characters;
+package com.appengers.marvelbase.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,15 +18,11 @@ import com.appengers.marvelbase.API.APICallback;
 import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.Models.Characters;
 import com.appengers.marvelbase.R;
+import com.appengers.marvelbase.ui.Characters.ViewModelChar;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CharSearch#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CharSearch extends Fragment {
+public class Searchbar extends Fragment {
 
     private SearchView searchView;
     private ViewModelChar model;
@@ -110,7 +103,6 @@ public class CharSearch extends Fragment {
                     Toast.makeText(requireContext(), "No existe el personaje con el término de búsqueda: " + query, Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onError(Throwable t) {
                 Log.e("API Error", "Error searching for character: " + t.getMessage());

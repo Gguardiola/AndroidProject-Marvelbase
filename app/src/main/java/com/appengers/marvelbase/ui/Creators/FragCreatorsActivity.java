@@ -1,4 +1,4 @@
-package com.appengers.marvelbase.ui.Characters;
+package com.appengers.marvelbase.ui.Creators;
 
 import android.os.Bundle;
 
@@ -7,30 +7,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.widget.Toast;
-
 import com.appengers.marvelbase.ChangeFragment;
 import com.appengers.marvelbase.R;
 import com.appengers.marvelbase.ui.Searchbar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragCharacterActivity#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragCharacterActivity extends AppCompatActivity implements ChangeFragment {
+public class FragCreatorsActivity extends AppCompatActivity implements ChangeFragment {
 
     private Fragment[] fragments;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragments=new Fragment[3];
+        fragments=new Fragment[2];
         fragments[0]=new Searchbar();
-        fragments[1]=new FragRecyclerChar();
-        setContentView(R.layout.fragment_frag_character_activity);
+        fragments[1]=new CreatorsRecyclerFragment();
+        setContentView(R.layout.activity_creator);
     }
-
     @Override
     public void changeFragment(int k) {
         FragmentManager fgmng = getSupportFragmentManager();
@@ -38,16 +29,13 @@ public class FragCharacterActivity extends AppCompatActivity implements ChangeFr
 
         switch (k) {
             case 1:
-                trans.replace(R.id.fragmentContainerMenu, fragments[0]);
-                Toast.makeText(this, "FRAGMENT 1!", Toast.LENGTH_SHORT).show();
+                trans.replace(R.id.fragmentContainerMenuCreator, fragments[0]);
                 break;
             case 2:
-                trans.replace(R.id.fragmentContainerRecycler, fragments[1]);
-                Toast.makeText(this, "FRAGMENT 2!", Toast.LENGTH_SHORT).show();
+                trans.replace(R.id.fragmentContainerRecyclerCreator, fragments[1]);
                 break;
         }
         trans.commit();
     }
-
 
 }
