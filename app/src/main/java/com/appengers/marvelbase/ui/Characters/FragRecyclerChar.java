@@ -28,6 +28,7 @@ public class FragRecyclerChar extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Characters> charactersList;
     private CharacterAdapter characterAdapter;
+    public CharacterAdapter firstList;
     private ViewModelChar model;
 
     public FragRecyclerChar() {
@@ -70,20 +71,22 @@ public class FragRecyclerChar extends Fragment {
                 if (charactersList != null) {
                     characterAdapter.setItems(charactersList);
                     characterAdapter.notifyDataSetChanged();
+
                     Log.d("FragRecyclerChar", "Recycler actualizada. Número de personajes: " + charactersList.size());
                 }
             }
         });
+
     }
 
-    private void getCharData(CharacterAdapter adapter) {
+    public void getCharData(CharacterAdapter adapter) {
         APIController appengers = new APIController(requireContext().getResources());
-
         appengers.getChar(0, 20, new APICallback<ArrayList<Characters>>() {
             @Override
             public void onSuccess(ArrayList<Characters> charactersList) {
                 adapter.setItems(charactersList);
                 adapter.notifyDataSetChanged();
+                model.setCharactersData(charactersList);
                 Log.d("FragRecyclerChar", "Llamada API exitosa. Número de personajes: " + charactersList.size());
             }
 

@@ -27,4 +27,7 @@ public class ViewModelChar extends ViewModel {
     public void setCharactersData(ArrayList<Characters> charactersList) {
         charactersData.setValue(charactersList);
     }
+    public void clearCharactersData() {
+        charactersData.setValue(new ArrayList<>());
+    }
 }

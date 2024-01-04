@@ -26,6 +26,7 @@ import com.appengers.marvelbase.ui.Favorites.CreatorsFavFragment;
 public class FragCharacterActivity extends AppCompatActivity implements ChangeFragment {
 
     private Fragment[] fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class FragCharacterActivity extends AppCompatActivity implements ChangeFr
         fragments[1]=new FragRecyclerChar();
         setContentView(R.layout.fragment_frag_character_activity);
     }
+
     @Override
     public void changeFragment(int k) {
         FragmentManager fgmng = getSupportFragmentManager();
@@ -51,5 +53,6 @@ public class FragCharacterActivity extends AppCompatActivity implements ChangeFr
         }
         trans.commit();
     }
+
 
 }
