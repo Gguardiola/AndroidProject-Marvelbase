@@ -61,6 +61,4 @@ public class FavoritesActivity extends AppCompatActivity implements ChangeFragme
         trans.commit();
 
     }
-
-
 }

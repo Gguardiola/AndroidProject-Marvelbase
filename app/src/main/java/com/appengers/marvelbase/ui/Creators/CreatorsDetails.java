@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class CreatorsDetails extends AppCompatActivity {
     
-    Button backBtn, addFavoriteBtn, showComicsBtn;
+    Button backBtn, addFavoriteBtn;
     ImageButton creatorImg;
     TextView creatorFullnameTxt, infoTxt;
     DBController db;
@@ -71,7 +71,6 @@ public class CreatorsDetails extends AppCompatActivity {
                 }
             }
         });
-        showComicsBtn = (Button) findViewById(R.id.detailComics_btn);
         creatorImg = (ImageButton) findViewById(R.id.detailCreator_img);
 
         fetchCreator(creatorId);

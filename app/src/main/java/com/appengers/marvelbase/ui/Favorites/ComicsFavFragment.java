@@ -27,7 +27,7 @@ public class ComicsFavFragment extends Fragment {
 
     RecyclerView comicsRecycler;
     ArrayList<Comics> comicsList;
-
+    ComicsAdapter adapter;
     ArrayList<Long> favoriteIdList;
 
     public void fetchComicsFavorites(ComicsAdapter adapter, int offset, int limit) {
@@ -49,7 +49,7 @@ public class ComicsFavFragment extends Fragment {
     }
     public void fetchComics(ArrayList<Long> favoriteIdList, ComicsAdapter adapter, int offset, int limit) {
         APIController api = new APIController(getResources());
-
+        comicsList = new ArrayList<>();
         for (Long item : favoriteIdList) {
             api.getComic(item.intValue(), new APICallback<ArrayList<Comics>>() {
 
@@ -82,15 +82,21 @@ public class ComicsFavFragment extends Fragment {
         comicsRecycler = (RecyclerView) v.findViewById(R.id.comicsRecycler);
         //mandatory! initialize the ArrayList
         comicsList = new ArrayList<>();
-        ComicsAdapter adapter;
         adapter = new ComicsAdapter(this.getActivity().getApplicationContext(), comicsList);
         RecyclerView.LayoutManager l = new LinearLayoutManager(this.getActivity().getApplicationContext());
         comicsRecycler.setLayoutManager(l);
         comicsRecycler.setItemAnimator(new DefaultItemAnimator());
         comicsRecycler.setAdapter(adapter);
         //mandatory! when the adapter is created, call the fetch
-        fetchComicsFavorites(adapter, 0, 20);
+        //fetchComicsFavorites(adapter, 0, 20);
         
         return v;
+    }
+
+    public void onResume() {
+        super.onResume();
+        adapter.setItems(new ArrayList<>());
+        adapter.notifyDataSetChanged();
+        fetchComicsFavorites(adapter, 0, 20);
     }
 }

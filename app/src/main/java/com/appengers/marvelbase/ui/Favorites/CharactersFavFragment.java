@@ -20,11 +20,15 @@ import com.appengers.marvelbase.R;
 import com.appengers.marvelbase.ui.Characters.CharacterAdapter;
 import com.appengers.marvelbase.ui.Comics.ComicsAdapter;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class CharactersFavFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Characters> charactersList;
+    CharacterAdapter characterAdapter;
     ArrayList<Long> favoriteIdList;
 
     public void fetchCharactersFavorites(CharacterAdapter adapter, int offset, int limit) {
@@ -46,7 +50,7 @@ public class CharactersFavFragment extends Fragment {
     }
     private void fetchCharacters(ArrayList<Long> favoriteIdList, CharacterAdapter adapter, int offset, int limit) {
         APIController api = new APIController(getResources());
-
+        charactersList = new ArrayList<>();
         for (Long item : favoriteIdList) {
             api.getCharacter(item.intValue(), new APICallback<ArrayList<Characters>>() {
                 @Override
@@ -78,16 +82,21 @@ public class CharactersFavFragment extends Fragment {
         //Intent intent = getIntent();
         recyclerView = v.findViewById(R.id.recyChar);
         charactersList = new ArrayList<>();
-        CharacterAdapter characterAdapter = new CharacterAdapter(this.getActivity().getApplicationContext(), charactersList);
-
-
+        characterAdapter = new CharacterAdapter(this.getActivity().getApplicationContext(), charactersList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(characterAdapter);
 
-        fetchCharactersFavorites(characterAdapter, 0, 20);
+        //fetchCharactersFavorites(characterAdapter, 0, 20);
 
         return v;
+    }
+
+    public void onResume() {
+        super.onResume();
+        characterAdapter.setItems(new ArrayList<>());
+        characterAdapter.notifyDataSetChanged();
+        fetchCharactersFavorites(characterAdapter, 0, 20);
     }
 }

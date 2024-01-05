@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class CreatorsFavFragment extends Fragment {
 
     RecyclerView creators_recycler;
+    CreatorsAdapter adapter;
     ArrayList<Creators> creatorsList;
     ArrayList<Long> favoriteIdList;
 
@@ -52,7 +53,7 @@ public class CreatorsFavFragment extends Fragment {
 
     public void fetchCreators(ArrayList<Long> favoriteIdList, CreatorsAdapter adapter, int offset, int limit) {
         APIController api = new APIController(getResources());
-
+        creatorsList = new ArrayList<>();
         for (Long item: favoriteIdList) {
             api.getCreator(item.intValue(), new APICallback<ArrayList<Creators>>() {
                 @Override
@@ -82,15 +83,21 @@ public class CreatorsFavFragment extends Fragment {
         creators_recycler = (RecyclerView)v.findViewById(R.id.creator_recyclerView);
         //mandatory! initialize the ArrayList
         creatorsList = new ArrayList<>();
-        CreatorsAdapter adapter;
         adapter = new CreatorsAdapter(this.getActivity().getApplicationContext(), creatorsList);
         RecyclerView.LayoutManager l = new LinearLayoutManager(this.getActivity().getApplicationContext());
         creators_recycler.setLayoutManager(l);
         creators_recycler.setItemAnimator(new DefaultItemAnimator());
         creators_recycler.setAdapter(adapter);
         //mandatory! when the adapter is created, call the fetch
-        fetchCreatorsFavorites(adapter, 0, 20);
+        //fetchCreatorsFavorites(adapter, 0, 20);
 
         return v;
+    }
+
+    public void onResume() {
+        super.onResume();
+        adapter.setItems(new ArrayList<>());
+        adapter.notifyDataSetChanged();
+        fetchCreatorsFavorites(adapter, 0, 20);
     }
 }
