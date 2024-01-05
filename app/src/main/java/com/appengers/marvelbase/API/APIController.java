@@ -294,6 +294,36 @@ public class APIController extends AppCompatActivity implements Serializable {
             }
         });
     }
+    public void searchComic(String query, APICallback<ArrayList<Comics>> callback) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIHandlerInterface service = retrofit.create(APIHandlerInterface.class);
+
+        Call<APIResponse<ComicsData>> call = service.searchComic(PUBLICKEY, 1, HASHKEY, query);
+        call.enqueue(new Callback<APIResponse<ComicsData>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ComicsData>> call, Response<APIResponse<ComicsData>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<ComicsData> comicsResponse = response.body();
+                    if (comicsResponse != null) {
+                        ComicsData data = comicsResponse.getData();
+                        if (data != null) {
+                            ArrayList<Comics> comicsList = data.getResults();
+                            callback.onSuccess(comicsList);
+                        }
+                    }
+                } else {
+
+                }
+            }
+            @Override
+            public void onFailure(Call<APIResponse<ComicsData>> call, Throwable t) {
+                // Handle failure
+            }
+        });
+    }
 
     public class APIResponse<T> {
         private int code;

@@ -84,7 +84,8 @@
             android:id="@+id/detailCharacter_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comics" />
+            android:text="Comics"
+            tools:visibility="gone" />
 
     </LinearLayout>
 

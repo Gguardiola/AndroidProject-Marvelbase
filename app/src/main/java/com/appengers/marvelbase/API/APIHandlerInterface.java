@@ -66,5 +66,12 @@ public interface APIHandlerInterface {
             @Query("ts") long timestamp,
             @Query("hash") String hash
     );
+    @GET("comics")
+    Call<APIController.APIResponse<APIController.ComicsData>> searchComic(
+            @Query("apikey") String apiKey,
+            @Query("ts") long timestamp,
+            @Query("hash") String hash,
+            @Query("titleStartsWith") String query
+    );
 }
 

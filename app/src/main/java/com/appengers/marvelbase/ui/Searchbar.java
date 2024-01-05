@@ -2,6 +2,7 @@ package com.appengers.marvelbase.ui;
 
 import static android.view.View.GONE;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,16 +25,15 @@ import com.appengers.marvelbase.API.APICallback;
 import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.Models.Characters;
+import com.appengers.marvelbase.Models.Comics;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 import com.appengers.marvelbase.ui.Characters.FragCharacterActivity;
 import com.appengers.marvelbase.ui.Characters.ViewModelChar;
-import com.appengers.marvelbase.ui.Comics.ComicsActivity;
 import com.appengers.marvelbase.ui.Comics.FragComicsActivity;
+import com.appengers.marvelbase.ui.Comics.ViewModelComics;
 import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 import com.appengers.marvelbase.ui.Creators.ViewModelCreators;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,7 @@ public class Searchbar extends Fragment {
     private SearchView searchView;
     private ViewModelChar modelChar;
     private ViewModelCreators modelCreators;
-    //private ViewModelComics modelComics;
+    private ViewModelComics modelComics;
     TextView activityTitle;
     Context hostActivity = getContext();
     String currentActivity;
@@ -52,7 +52,7 @@ public class Searchbar extends Fragment {
         super.onCreate(savedInstanceState);
         modelChar = new ViewModelProvider(requireActivity()).get(ViewModelChar.class);
         modelCreators = new ViewModelProvider(requireActivity()).get(ViewModelCreators.class);
-        //modelChar = new ViewModelProvider(requireActivity()).get(ViewModelChar.class);
+        modelComics = new ViewModelProvider(requireActivity()).get(ViewModelComics.class);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Searchbar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_char_search, container, false);
+        View v = inflater.inflate(R.layout.fragment_searchbar, container, false);
 
         activityTitle = (TextView) v.findViewById(R.id.activityTitle);
         searchView = v.findViewById(R.id.busca);
@@ -138,6 +138,7 @@ public class Searchbar extends Fragment {
 
         return v;
     }
+
     private void restoreOriginalList() {
         APIController appengers = new APIController(requireContext().getResources());
 
@@ -160,15 +161,27 @@ public class Searchbar extends Fragment {
             appengers.getCreators(0, 20, new APICallback<ArrayList<Creators>>() {
                 @Override
                 public void onSuccess(ArrayList<Creators> creatorsList) {
-                    modelCreators.setCreatorsData(creatorsList); // Set the data in the ViewModel
-                    Log.d("CharSearch", "Original list restored. Number of characters: " + creatorsList.size());
+                    modelCreators.setCreatorsData(creatorsList);
+                    Log.d("CreatorSearch", "Original list restored. Number of creators: " + creatorsList.size());
                 }
                 @Override
                 public void onError(Throwable t) {
-                    Log.e("CharSearch", "Error restoring original list", t);
+                    Log.e("CreatorSearch", "Error restoring original list", t);
                 }
             });
-        }
+        } else if(currentCategory == DBController.Category.COMICS)
+            modelComics.clearComicsData();
+            appengers.getComics(0, 20, new APICallback<ArrayList<Comics>>() {
+                @Override
+                public void onSuccess(ArrayList<Comics> comicsList) {
+                    modelComics.setComicsData(comicsList);
+                    Log.d("ComicSearch", "Original list restored. Number of comics: " + comicsList.size());
+                }
+                @Override
+                public void onError(Throwable t) {
+                    Log.e("ComicSearch", "Error restoring original list", t);
+                }
+            });
     }
 
     private void handleSearchQuery(String query) {
@@ -212,7 +225,23 @@ public class Searchbar extends Fragment {
                 }
             });
         } else if(currentCategory == DBController.Category.COMICS){
+            api.searchComic(query, new APICallback<ArrayList<Comics>>() {
+                @Override
+                public void onSuccess(ArrayList<Comics> comicsList) {
+                    if (comicsList != null && !comicsList.isEmpty()) {
+                        Comics foundComic = comicsList.get(0);
+                        Toast.makeText(requireContext(), "El comic existe: " + foundComic.getTitle(), Toast.LENGTH_SHORT).show();
+                        modelComics.setComicsData(comicsList);
+                    } else {
+                        Toast.makeText(requireContext(), "No existe el comic con el término de búsqueda: " + query, Toast.LENGTH_SHORT).show();
+                    }
+                }
 
+                @Override
+                public void onError(Throwable t) {
+                    Log.e("API Error", "Error searching for comic: " + t.getMessage());
+                }
+            });
         }
     }
 

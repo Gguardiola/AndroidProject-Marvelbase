@@ -51,6 +51,7 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
             creatorImg = itemView.findViewById(R.id.creator_img);
             fullName = itemView.findViewById(R.id.creator_name);
             creatorCard = itemView.findViewById(R.id.creator_card);
+            creatorCard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         }
     }
@@ -66,7 +67,8 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull CreatorsAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Creators creators = creatorsList.get(position);
-        Glide.with(holder.itemView.getContext()).load(creatorsList.get(position).getThumbnail()).fitCenter().into(holder.creatorImg);
+        //Glide.with(holder.itemView.getContext()).load(creatorsList.get(position).getThumbnail()).into(holder.creatorImg);
+        Picasso.get().load(creatorsList.get(position).getThumbnail()).fit().into(holder.creatorImg);
         holder.fullName.setText(String.valueOf(creators.getFirstName()));
 
         //current clicked item handler
@@ -77,15 +79,11 @@ public class CreatorsAdapter extends RecyclerView.Adapter<CreatorsAdapter.MyView
                     onClickListener.onClick(position);
                 }
                 else{
-                    if(lastItem != null) {
-                        //lastItem.creatorCard.setBackgroundColor(Color.parseColor("#EEEEEE"));
-                    }
                     Intent intent = new Intent(context, CreatorsDetails.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("creatorId", creatorsList.get(position).getId());
                     context.startActivity(intent);
                     lastItem = holder;
-                    //holder.creatorCard.setBackgroundColor(Color.parseColor("#D4EFDF"));
                     setSelectedItem(position);
                 }
             }

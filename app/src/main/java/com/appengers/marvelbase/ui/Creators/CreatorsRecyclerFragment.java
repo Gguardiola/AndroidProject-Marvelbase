@@ -28,8 +28,8 @@ public class CreatorsRecyclerFragment extends Fragment {
 
     RecyclerView creators_recycler;
     ArrayList<Creators> creatorsList;
+    private CreatorsAdapter adapter;
     ArrayList<Long> favoriteIdList;
-    private CreatorsAdapter creatorsAdapter;
     private ViewModelCreators model;
 
     public void fetchCreators(CreatorsAdapter adapter, int offset, int limit) {
@@ -62,7 +62,6 @@ public class CreatorsRecyclerFragment extends Fragment {
         creators_recycler = (RecyclerView)v.findViewById(R.id.creator_recyclerView);
         //mandatory! initialize the ArrayList
         creatorsList = new ArrayList<>();
-        CreatorsAdapter adapter;
         adapter = new CreatorsAdapter(this.getActivity().getApplicationContext(), creatorsList);
         RecyclerView.LayoutManager l = new LinearLayoutManager(this.getActivity().getApplicationContext());
         creators_recycler.setLayoutManager(l);
@@ -90,8 +89,8 @@ public class CreatorsRecyclerFragment extends Fragment {
             public void onChanged(ArrayList<Creators> creatorsList) {
 
                 if (creatorsList != null) {
-                    creatorsAdapter.setItems(creatorsList);
-                    creatorsAdapter.notifyDataSetChanged();
+                    adapter.setItems(creatorsList);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
