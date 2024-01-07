@@ -1,39 +1,22 @@
 package com.appengers.marvelbase;
 
-import static android.content.ContentValues.TAG;
-
 import static com.appengers.marvelbase.UserDataHandler.isFirstRun;
 import static com.appengers.marvelbase.UserDataHandler.setFirstRun;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appengers.marvelbase.API.APIController;
 import com.appengers.marvelbase.API.DBController;
-import com.appengers.marvelbase.API.DBController.Category;
-import com.appengers.marvelbase.ui.Characters.CharacterActivity;
 import com.appengers.marvelbase.ui.Characters.FragCharacterActivity;
-import com.appengers.marvelbase.ui.Comics.ComicsActivity;
 import com.appengers.marvelbase.ui.Comics.FragComicsActivity;
 import com.appengers.marvelbase.ui.Creators.CreatorsActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import com.appengers.marvelbase.ui.Favorites.FavoritesActivity;
 import com.squareup.picasso.Picasso;

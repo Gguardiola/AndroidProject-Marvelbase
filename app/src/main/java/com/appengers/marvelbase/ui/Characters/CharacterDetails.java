@@ -49,7 +49,7 @@ public class CharacterDetails extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CharacterDetails.this, CharacterActivity.class);
+                Intent intent = new Intent(CharacterDetails.this, FragCharacterActivity.class);
                 setResult(RESULT_CANCELED, intent);
                 finish();
             }
