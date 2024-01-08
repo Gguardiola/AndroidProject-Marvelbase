@@ -51,7 +51,7 @@ public class ComicsDetails extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ComicsDetails.this, ComicsActivity.class);
+                Intent intent = new Intent(ComicsDetails.this, FragComicsActivity.class);
                 setResult(RESULT_CANCELED, intent);
                 finish();
             }

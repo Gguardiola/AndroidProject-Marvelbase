@@ -35,9 +35,6 @@
             android:name=".ui.Creators.CreatorsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Comics.ComicsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.Comics.ComicsDetails"
             android:exported="false" />
         <activity
