@@ -1,6 +1,7 @@
 package com.appengers.marvelbase.ui.Favorites;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,12 +29,16 @@ public class FavoritesMenuFragment extends Fragment {
         creatorsFragmentBtn = (Button) v.findViewById(R.id.creators_frgmt_btn);
         charactersFragmentBtn = (Button) v.findViewById(R.id.char_frgmt_btn);
         comicsFragmentBtn = (Button) v.findViewById(R.id.comics_frgmt_btn);
+        creatorsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_200));
 
         creatorsFragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity favact = getActivity();
                 ((ChangeFragment)favact).changeFragment(1);
+                creatorsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                comicsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                charactersFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
             }
         });
         charactersFragmentBtn.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +46,9 @@ public class FavoritesMenuFragment extends Fragment {
             public void onClick(View v) {
                 Activity favact = getActivity();
                 ((ChangeFragment)favact).changeFragment(3);
+                creatorsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                comicsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                charactersFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_200));
             }
         });
         comicsFragmentBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +56,9 @@ public class FavoritesMenuFragment extends Fragment {
             public void onClick(View v) {
                 Activity favact = getActivity();
                 ((ChangeFragment)favact).changeFragment(2);
+                creatorsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                comicsFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                charactersFragmentBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
             }
         });
         return v;

@@ -139,6 +139,7 @@ public class Searchbar extends Fragment {
         return v;
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private void restoreOriginalList() {
         APIController appengers = new APIController(requireContext().getResources());
 

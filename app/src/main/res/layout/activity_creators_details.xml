@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/back_btn"
@@ -25,13 +26,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/type_txt"
-                    android:layout_width="250dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="Creator" />
+                    android:text="Creator"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/addFavorite_btn"
@@ -46,8 +49,19 @@
                 android:id="@+id/creatorsName_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="..."
+                android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:alpha="0.3"
+                android:background="@android:color/system_neutral1_200" />
 
         </LinearLayout>
 
@@ -66,14 +80,27 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Information"
+            android:textSize="20sp"
             android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:alpha="0.3"
+            android:background="@android:color/system_neutral1_200" />
 
         <TextView
             android:id="@+id/info_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="..." />
+            android:padding="20dp"
+            android:text="..."
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"

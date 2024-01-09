@@ -17,6 +17,7 @@ import com.appengers.marvelbase.API.DBController;
 import com.appengers.marvelbase.Models.Creators;
 import com.appengers.marvelbase.R;
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -104,7 +105,8 @@ public class CreatorsDetails extends AppCompatActivity {
                 currentCreator = fetchedCreator.get(0);
                 creatorFullnameTxt.setText(currentCreator.getFirstName());
                 infoTxt.setText(String.valueOf(currentCreator.getFirstName()+" "+currentCreator.getLastName()));
-                Glide.with(getApplicationContext()).load(currentCreator.getThumbnail()).fitCenter().into(creatorImg);
+                Picasso.get().load(currentCreator.getThumbnail()).fit().into(creatorImg);
+                //Glide.with(getApplicationContext()).load(currentCreator.getThumbnail()).fitCenter().into(creatorImg);
 
             }
             @Override
